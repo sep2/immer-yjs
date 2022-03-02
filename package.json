@@ -1,0 +1,26 @@
+{
+    "name": "immer-yjs-monorepo",
+    "version": "0.0.1",
+    "private": true,
+    "license": "MIT",
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "lint": "eslint --ext .js,.ts --ignore-path .gitignore --fix packages",
+        "format": "prettier . --write"
+    },
+    "devDependencies": {
+        "@types/node": "^17.0.21",
+        "@typescript-eslint/eslint-plugin": "^5.13.0",
+        "@typescript-eslint/parser": "^5.13.0",
+        "eslint": "^8.10.0",
+        "eslint-config-prettier": "^8.4.0",
+        "eslint-plugin-import": "^2.25.4",
+        "eslint-plugin-prettier": "^4.0.0",
+        "eslint-plugin-simple-import-sort": "^7.0.0",
+        "prettier": "^2.5.1",
+        "vite": "^2.8.4"
+    },
+    "packageManager": "yarn@3.2.0"
+}
