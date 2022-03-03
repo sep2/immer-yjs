@@ -18,7 +18,7 @@ update(state => {
     state.nested[0].key = {
         id: 123,
         p1: "a",
-        p2: "b",
+        p2: ["a", "b", "c"],
     }
 })
 ```
@@ -29,7 +29,11 @@ Y.transact(doc, () => {
     const val = new Y.Map()
     val.set("id", 123)
     val.set("p1", "a")
-    val.set("p2", "b")
+
+    const arr = new Y.Array()
+    arr.push(["a", "b", "c"])
+    val.set("p2", arr)
+
     state.get("nested").get(0).set("key", val)
 })
 ```
@@ -39,7 +43,13 @@ Y.transact(doc, () => {
 
 
 # Documentation
+
+`Y.Map` binds to plain object `{}`, `Y.Array` binds to plain array `[]`, and any level of nested `Y.Map`/`Y.Array` is also supported, which binds to nested plain json data. Modifications in `y.js` data types are reflected to the snapshot of their corresponding plain json bindings. Calling `update(...)` (similar to `produce(...)` in `immer`) will generate a new snapshot as well as update their corresponding `y.js` types.
+
+`Y.XmlElement` & `Y.Text` have no equivalent to json data types, so they are not supported. If you want to use them, please use the `y.js` top-level type (e.g. `doc.getText("xxx")`) directly, or submit an issue describing your scenario & API expectation.
+
 ## With Vanilla Javascript/Typescript
+
 🚀🚀🚀 [Please see the test for detailed usage.](https://github.dev/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.test.ts) 🚀🚀🚀
 
 ## Integration with React
@@ -77,7 +87,10 @@ function Component() {
     const [count, update] = useImmerYjs((s) => s.nested[0].count)
 
     const handleClick = () => {
-        update(s => s.nested[0].count++)
+        update(s => {
+            // any change supported by immer
+            s.nested[0].count++
+        })
     }
 
     return <button onClick={handleClick}>{count}</button>
