@@ -94,7 +94,7 @@ test('bind test', () => {
     // unchanged properties should keep referential equality with previous snapshot
     expect(snapshot2['0002']).toBe(snapshot1['0002'])
     expect(snapshot2['0001'].batters).toBe(snapshot1['0001'].batters)
-    expect(snapshot2['0001'].topping[0]).toBe(snapshot2['0001'].topping[0])
+    expect(snapshot2['0001'].topping[0]).toBe(snapshot1['0001'].topping[0])
 
     // the underlying yjs data type reflect changes as well
     expect(map.toJSON()).toStrictEqual(snapshot2)
