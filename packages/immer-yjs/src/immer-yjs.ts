@@ -92,21 +92,21 @@ function applyPatch(source: Y.Map<any> | Y.Array<any>, patch: Patch) {
     }
 }
 
-export type ModifyFn<S extends Snapshot> = (draft: S) => void
+export type UpdateFn<S extends Snapshot> = (draft: S) => void
 
-function applyModify<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, snapshot: S, fn: ModifyFn<S>) {
+function applyUpdate<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, snapshot: S, fn: UpdateFn<S>) {
     const [, patches] = produceWithPatches(snapshot, fn)
     patches.forEach((patch) => applyPatch(source, patch))
 }
 
 export type ListenerFn<S extends Snapshot> = (snapshot: S) => void
+export type UnsubscribeFn = () => void
 
 export type Binder<S extends Snapshot> = {
     unbind: () => void
     get: () => S
-    modify: (fn: ModifyFn<S>) => void
-    subscribe: (fn: ListenerFn<S>) => void
-    unsubscribe: (fn: ListenerFn<S>) => void
+    update: (fn: UpdateFn<S>) => void
+    subscribe: (fn: ListenerFn<S>) => UnsubscribeFn
 }
 
 export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>): Binder<S> {
@@ -116,9 +116,10 @@ export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>): Bin
 
     const subscription = new Set<ListenerFn<S>>()
 
-    const subscribe = (fn: ListenerFn<S>) => void subscription.add(fn)
-
-    const unsubscribe = (fn: ListenerFn<S>) => void subscription.delete(fn)
+    const subscribe = (fn: ListenerFn<S>) => {
+        subscription.add(fn)
+        return () => void subscription.delete(fn)
+    }
 
     const observer = (events: Y.YEvent[]) => {
         snapshot = applyEvents(get(), events)
@@ -128,23 +129,22 @@ export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>): Bin
     source.observeDeep(observer)
     const unbind = () => source.unobserveDeep(observer)
 
-    const modify = (fn: ModifyFn<S>) => {
+    const update = (fn: UpdateFn<S>) => {
         const doc = source.doc
 
         if (doc) {
             Y.transact(doc, () => {
-                applyModify(source, get(), fn)
+                applyUpdate(source, get(), fn)
             })
         } else {
-            applyModify(source, get(), fn)
+            applyUpdate(source, get(), fn)
         }
     }
 
     return {
         unbind,
         get,
-        modify,
+        update,
         subscribe,
-        unsubscribe,
     }
 }

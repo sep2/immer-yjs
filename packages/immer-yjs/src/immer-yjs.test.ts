@@ -6,6 +6,7 @@ import { createSampleArray, createSampleObject, SampleArray, SampleObject } from
 import { JSONArray, JSONObject } from './types'
 import { applyJsonArray, applyJsonObject, isJSONArray, isJSONObject, notImplemented } from './util'
 
+// helper for setup document recursively
 function setupDocument(doc: Y.Doc, struct: Record<string, JSONObject | JSONArray>, origin?: any) {
     Y.transact(
         doc,
@@ -33,9 +34,10 @@ test('bind test', () => {
     const topLevelMap = 'map'
     const topLevelArray = 'arr'
 
-    // helper for setup document recursively
+    // initialize document with sample data
     setupDocument(doc, { [topLevelMap]: initialObj, [topLevelArray]: initialArr })
 
+    // get reference of CRDT type for binding
     const map = doc.getMap(topLevelMap)
     // const arr = doc.getArray(topLevelArray) // doesn't test array yet
 
@@ -61,8 +63,8 @@ test('bind test', () => {
     expect(yd1.get('batters').get('batter')).toBeInstanceOf(Y.Array)
     expect(yd1.get('batters').get('batter').get(0).get('id')).toBeTypeOf('string')
 
-    // modify the state with immer
-    binder.modify((state) => {
+    // update the state with immer
+    binder.update((state) => {
         state['0001'].ppu += 0.1
         const d1 = state['0001']
 
@@ -81,7 +83,7 @@ test('bind test', () => {
     // snapshot2 changed
     expect(snapshot1).not.equal(snapshot2)
 
-    // changed properties should reflect what we did in modify(...)
+    // changed properties should reflect what we did in update(...)
     expect(snapshot2['0001'].ppu).toStrictEqual(0.65)
     expect(snapshot2['0001'].topping.find((x) => x.id === '9999')).toStrictEqual({ id: '9999', type: 'test3' })
     expect(snapshot2['0003']).toBeUndefined()
