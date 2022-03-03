@@ -35,7 +35,8 @@ Y.transact(doc, () => {
 
 # Documentation
 
-Please see the [test](https://github.dev/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.test.ts) for detailed usage.
+## With Vanilla Javascript/Typescript
+🚀🚀🚀 [Please see the test for detailed usage.](https://github.dev/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.test.ts) 🚀🚀🚀
 
 ## Integration with React
 By leveraging [useSyncExternalStoreWithSelector](https://github.com/reactwg/react-18/discussions/86).
