@@ -10,7 +10,7 @@ Combine immer & y.js
 
 Efficient update is enabled by generating a new snapshot while mutating the exact part changed in the previous one, nothing more, just like with `immer`. Any change comes from `y.js` is also reflected in the new snapshot in the least impact manner.
 
-This library is very simple, just ~200 lines of code, [no magic here](https://github.dev/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.ts).
+This library is very simple, just ~200 lines of code, [no magic here](https://github.dev/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.ts). Sized in 1.2 KiB (gzip) without minification.
 
 Do:
 ```js

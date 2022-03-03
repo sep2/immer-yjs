@@ -10,10 +10,11 @@ export default defineConfig({
             formats: ['es', 'umd'],
         },
         rollupOptions: {
-            external: ['yjs'],
+            external: ['yjs', 'immer'],
             output: {
                 globals: {
                     yjs: 'yjs',
+                    immer: 'immer',
                 },
                 // Since we publish our ./src folder, there's no point
                 // in bloating sourcemaps with another copy of it.
