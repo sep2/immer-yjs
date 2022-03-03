@@ -100,5 +100,9 @@ function Component() {
 binder.unbind()
 ```
 
+# Demos
+Data will sync between multiple browser tabs automatically.
+* [Messages Object](https://codesandbox.io/s/immer-yjs-demo-6e0znb)
+
 # Similar projects
 [valtio-yjs](https://github.com/dai-shi/valtio-yjs)
