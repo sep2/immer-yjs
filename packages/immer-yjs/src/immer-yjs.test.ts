@@ -104,6 +104,26 @@ test('bind test', () => {
     expect(map.get('0001')).toBe(yd1)
     expect((map.get('0001') as any).get('topping')).toBe(yd1.get('topping'))
 
+    // save the length for later comparison
+    const expectLength = binder.get()['0001'].batters.batter.length
+
+    // change from y.js
+    yd1.get('batters')
+        .get('batter')
+        .push([{ id: '1005', type: 'test' }])
+
+    // change reflected in snapshot
+    expect(binder.get()['0001'].batters.batter.at(-1)).toStrictEqual({ id: '1005', type: 'test' })
+
+    // now the length + 1
+    expect(binder.get()['0001'].batters.batter.length).toBe(expectLength + 1)
+
+    // delete something from yjs
+    yd1.delete('topping')
+
+    // deletion reflected in snapshot
+    expect(binder.get()['0001'].topping).toBeUndefined()
+
     // release the observer, so the CRDT type can be bind again
     binder.unbind()
 })
