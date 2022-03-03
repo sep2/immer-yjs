@@ -7,6 +7,9 @@
         "packages/*"
     ],
     "scripts": {
+        "build": "yarn workspace immer-yjs build",
+        "test": "yarn workspace immer-yjs test",
+        "publish": "yarn workspace immer-yjs npm publish",
         "lint": "eslint --ext .js,.ts --ignore-path .gitignore --fix packages",
         "format": "prettier . --write"
     },
