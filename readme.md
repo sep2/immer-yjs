@@ -5,11 +5,11 @@
 Combine immer & y.js
 
 # What is this
-[immer](https://github.com/immerjs/immer) is a library for easy immutable data manipulation library using plain json structure. [y.js](https://github.com/yjs/yjs) is a CRDT library with mutation-based API. `immer-yjs` allows simple manipulation of `y.js` data types with the api provided by `immer`.
+[immer](https://github.com/immerjs/immer) is a library for easy immutable data manipulation using plain json structure. [y.js](https://github.com/yjs/yjs) is a CRDT library with mutation-based API. `immer-yjs` allows manipulating `y.js` data types with the api provided by `immer`.
 
 Efficient update is enabled by generating a new snapshot while mutating the exact part changed in the previous one, nothing more, just like with `immer`. Any change comes from `y.js` is also reflected in the new snapshot in the least impact manner.
 
-This library is very simple, just ~200 lines of code, no magic here.
+This library is very simple, just ~200 lines of code, [no magic here](https://github.dev/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.ts).
 
 Do:
 ```js
@@ -35,7 +35,7 @@ Y.transact(doc, () => {
 
 # Documentation
 
-Please see the [test](./src/immer-yjs.test.ts) for detailed usage.
+Please see the [test](https://github.dev/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.test.ts) for detailed usage.
 
 ## Integration with React
 By leveraging [useSyncExternalStoreWithSelector](https://github.com/reactwg/react-18/discussions/86).
