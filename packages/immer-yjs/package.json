@@ -2,7 +2,7 @@
     "name": "immer-yjs",
     "license": "MIT",
     "description": "Combine immer & y.js",
-    "version": "0.0.3",
+    "version": "0.0.7",
     "Author": "LCZ",
     "repository": {
         "type": "git",
