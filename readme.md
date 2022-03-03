@@ -58,7 +58,7 @@ By leveraging [useSyncExternalStoreWithSelector](https://github.com/reactwg/reac
 ```tsx
 import { bind } from 'immer-yjs'
 
-// define state type
+// define state shape (not necessarily in js)
 interface State {
     // any nested plain json data type
 }
