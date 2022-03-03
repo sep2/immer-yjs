@@ -17,6 +17,9 @@ module.exports = {
     plugins: ['simple-import-sort', 'prettier'],
     rules: {
         'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        'simple-import-sort/imports': 'error',
+        'simple-import-sort/exports': 'error',
         'no-unused-vars': 'off',
     },
 }
