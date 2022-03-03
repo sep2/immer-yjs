@@ -34,8 +34,11 @@ Y.transact(doc, () => {
 })
 ```
 
-# Documentation
+# Installation
+`yarn add immer-yjs immer yjs`
 
+
+# Documentation
 ## With Vanilla Javascript/Typescript
 🚀🚀🚀 [Please see the test for detailed usage.](https://github.dev/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.test.ts) 🚀🚀🚀
 
@@ -83,3 +86,6 @@ function Component() {
 // when done
 binder.unbind()
 ```
+
+# Similar projects
+[valtio-yjs](https://github.com/dai-shi/valtio-yjs)
