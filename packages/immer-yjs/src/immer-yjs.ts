@@ -11,27 +11,27 @@ export type Snapshot = JSONObject | JSONArray
 function applyEvents<S extends Snapshot>(snapshot: S, events: Y.YEvent[]) {
     return produce(snapshot, (d) => {
         events.forEach((event) => {
-            const target = event.path.reduce((obj, step) => {
+            const base = event.path.reduce((obj, step) => {
                 // @ts-ignore
                 return obj[step]
             }, d)
 
-            if (event instanceof Y.YMapEvent && isJSONObject(target)) {
+            if (event instanceof Y.YMapEvent && isJSONObject(base)) {
                 const source = event.target as Y.Map<any>
 
                 event.changes.keys.forEach((change, key) => {
                     switch (change.action) {
                         case 'add':
                         case 'update':
-                            target[key] = toPlainValue(source.get(key))
+                            base[key] = toPlainValue(source.get(key))
                             break
                         case 'delete':
-                            delete target[key]
+                            delete base[key]
                             break
                     }
                 })
-            } else if (event instanceof Y.YArrayEvent && isJSONArray(target)) {
-                const arr = target as unknown as any[]
+            } else if (event instanceof Y.YArrayEvent && isJSONArray(base)) {
+                const arr = base as unknown as any[]
 
                 let retain = 0
                 event.changes.delta.forEach((change) => {
@@ -57,34 +57,62 @@ function applyEvents<S extends Snapshot>(snapshot: S, events: Y.YEvent[]) {
     })
 }
 
-function applyPatch(source: Y.Map<any> | Y.Array<any>, patch: Patch) {
-    const last = patch.path.pop()!
+const PATCH_REPLACE = 'replace'
+const PATCH_ADD = 'add'
+const PATCH_REMOVE = 'remove'
 
-    const target = patch.path.reduce((obj, step) => {
-        return obj.get(step as never)
-    }, source)
+function applyPatch(target: Y.Map<any> | Y.Array<any>, patch: Patch) {
+    const { path, op, value } = patch
 
-    if (target instanceof Y.Map) {
-        switch (patch.op) {
-            case 'replace':
-            case 'add':
-                target.set(last as string, toYDataType(patch.value))
+    if (!path.length) {
+        if (op !== PATCH_REPLACE) {
+            notImplemented()
+        }
+
+        if (target instanceof Y.Map && isJSONObject(value)) {
+            target.clear()
+            for (const k in value) {
+                target.set(k, toYDataType(value[k]))
+            }
+        } else if (target instanceof Y.Array && isJSONArray(value)) {
+            target.delete(0, target.length)
+            target.push(patch.value.map(toYDataType))
+        } else {
+            notImplemented()
+        }
+
+        return
+    }
+
+    let base = target
+    for (let i = 0; i < path.length - 1; i++) {
+        const step = path[i]
+        base = base.get(step as never)
+    }
+
+    const property = path[path.length - 1]
+
+    if (base instanceof Y.Map && typeof property === 'string') {
+        switch (op) {
+            case PATCH_ADD:
+            case PATCH_REPLACE:
+                base.set(property, toYDataType(value))
                 break
-            case 'remove':
-                target.delete(last as string)
+            case PATCH_REMOVE:
+                base.delete(property)
                 break
         }
-    } else if (target instanceof Y.Array && typeof last === 'number') {
-        switch (patch.op) {
-            case 'add':
-                target.insert(last, [toYDataType(patch.value)])
+    } else if (base instanceof Y.Array && typeof property === 'number') {
+        switch (op) {
+            case PATCH_ADD:
+                base.insert(property, [toYDataType(value)])
                 break
-            case 'replace':
-                target.delete(last)
-                target.insert(last, [toYDataType(patch.value)])
+            case PATCH_REPLACE:
+                base.delete(property)
+                base.insert(property, [toYDataType(value)])
                 break
-            case 'remove':
-                target.delete(last)
+            case PATCH_REMOVE:
+                base.delete(property)
                 break
         }
     } else {

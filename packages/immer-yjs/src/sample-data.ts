@@ -1,7 +1,11 @@
 // Copied from https://opensource.adobe.com/Spry/samples/data_region/JSONDataSetSample.html
 
+export const data1Id = '0001'
+export const data2Id = '0002'
+export const data3Id = '0003'
+
 const data1 = {
-    id: '0001',
+    id: data1Id,
     type: 'donut',
     name: 'Cake',
     ppu: 0.55,
@@ -25,7 +29,7 @@ const data1 = {
 }
 
 const data2 = {
-    id: '0002',
+    id: data2Id,
     type: 'donut',
     name: 'Raised',
     ppu: 0.55,
@@ -42,7 +46,7 @@ const data2 = {
 }
 
 const data3 = {
-    id: '0003',
+    id: data3Id,
     type: 'donut',
     name: 'Old Fashioned',
     ppu: 0.55,
@@ -72,13 +76,13 @@ function deepClone(x: any) {
     return JSON.parse(JSON.stringify(x))
 }
 
-export type SampleArray = typeof sampleArray
-export type SampleObject = typeof sampleObject
+export type SampleArrayType = typeof sampleArray
+export type SampleObjectType = typeof sampleObject
 
-export function createSampleArray(): SampleArray {
+export function createSampleArray(): SampleArrayType {
     return deepClone(sampleArray)
 }
 
-export function createSampleObject(): SampleObject {
+export function createSampleObject(): SampleObjectType {
     return deepClone(sampleObject)
 }
