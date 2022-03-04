@@ -20,6 +20,10 @@ update(state => {
         p1: "a",
         p2: ["a", "b", "c"],
     }
+
+    delete state.someKey
+
+    // ...any operation supported by immer
 })
 ```
 
@@ -35,6 +39,8 @@ Y.transact(doc, () => {
     val.set("p2", arr)
 
     state.get("nested").get(0).set("key", val)
+
+    state.delete("someKey")
 })
 ```
 
@@ -61,6 +67,7 @@ import { bind } from 'immer-yjs'
 // define state shape (not necessarily in js)
 interface State {
     // any nested plain json data type
+    nested: { count: number }[]
 }
 
 const doc = new Y.Doc()
@@ -82,17 +89,23 @@ function useImmerYjs<Selection>(selector: (state: State) => Selection) {
     return [selection, binder.update]
 }
 
+// optionally set initial data
+binder.update(state => {
+    state.nested = [{count: 0}]
+})
+
 // use in component
 function Component() {
     const [count, update] = useImmerYjs((s) => s.nested[0].count)
 
     const handleClick = () => {
         update(s => {
-            // any change supported by immer
+            // any operation supported by immer
             s.nested[0].count++
         })
     }
 
+    // will only rerender when 'count' changed
     return <button onClick={handleClick}>{count}</button>
 }
 
