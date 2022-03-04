@@ -1,11 +1,11 @@
 // Copied from https://opensource.adobe.com/Spry/samples/data_region/JSONDataSetSample.html
 
-export const data1Id = '0001'
-export const data2Id = '0002'
-export const data3Id = '0003'
+export const id1 = '0001'
+export const id2 = '0002'
+export const id3 = '0003'
 
 const data1 = {
-    id: data1Id,
+    id: id1,
     type: 'donut',
     name: 'Cake',
     ppu: 0.55,
@@ -29,7 +29,7 @@ const data1 = {
 }
 
 const data2 = {
-    id: data2Id,
+    id: id2,
     type: 'donut',
     name: 'Raised',
     ppu: 0.55,
@@ -46,7 +46,7 @@ const data2 = {
 }
 
 const data3 = {
-    id: data3Id,
+    id: id3,
     type: 'donut',
     name: 'Old Fashioned',
     ppu: 0.55,
