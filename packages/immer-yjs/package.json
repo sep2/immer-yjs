@@ -2,7 +2,7 @@
     "name": "immer-yjs",
     "license": "MIT",
     "description": "Combine immer & y.js",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "Author": "LCZ",
     "repository": {
         "type": "git",
@@ -24,7 +24,8 @@
     "scripts": {
         "build": "tsc && vite build",
         "test": "NODE_NO_WARNINGS=1 vitest",
-        "coverage": "vitest run --coverage"
+        "coverage": "vitest run --coverage",
+        "release": "standard-version"
     },
     "peerDependencies": {
         "immer": "^9.0.12",
@@ -32,6 +33,7 @@
     },
     "devDependencies": {
         "immer": "^9.0.12",
+        "standard-version": "^9.3.2",
         "typescript": "^4.5.4",
         "vite": "^2.8.4",
         "vite-dts": "^1.0.4",

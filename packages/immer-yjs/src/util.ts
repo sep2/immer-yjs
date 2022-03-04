@@ -32,8 +32,7 @@ export function toYDataType(v: JSONValue) {
 }
 
 export function applyJsonArray(dest: Y.Array<unknown>, source: JSONArray) {
-    const converted = source.map(toYDataType).filter(Boolean)
-    dest.push(converted)
+    dest.push(source.map(toYDataType))
 }
 
 export function applyJsonObject(dest: Y.Map<unknown>, source: JSONObject) {

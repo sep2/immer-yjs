@@ -25,7 +25,7 @@ function setupDocument(doc: Y.Doc, struct: Record<string, JSONObject | JSONArray
     )
 }
 
-test('bind test', () => {
+test('bind usage demo', () => {
     const doc = new Y.Doc()
 
     const initialObj: SampleObject = createSampleObject() // plain object
@@ -126,4 +126,20 @@ test('bind test', () => {
 
     // release the observer, so the CRDT type can be bind again
     binder.unbind()
+})
+
+test('boolean in array', () => {
+    const doc = new Y.Doc()
+
+    const map = doc.getMap('data')
+
+    const binder = bind<any>(map)
+
+    binder.update((state) => {
+        state.k1 = true
+        state.k2 = false
+        state.k3 = [true, false, true]
+    })
+
+    expect(map.toJSON()).toStrictEqual({ k1: true, k2: false, k3: [true, false, true] })
 })
