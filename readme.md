@@ -5,6 +5,7 @@
 
 Combine immer & y.js
 
+
 # What is this
 [immer](https://github.com/immerjs/immer) is a library for easy immutable data manipulation using plain json structure. [y.js](https://github.com/yjs/yjs) is a CRDT library with mutation-based API. `immer-yjs` allows manipulating `y.js` data types with the api provided by `immer`.
 
@@ -44,6 +45,7 @@ Y.transact(doc, () => {
 })
 ```
 
+
 # Installation
 `yarn add immer-yjs immer yjs`
 
@@ -54,9 +56,11 @@ Y.transact(doc, () => {
 
 `Y.XmlElement` & `Y.Text` have no equivalent to json data types, so they are not supported. If you want to use them, please use the `y.js` top-level type (e.g. `doc.getText("xxx")`) directly, or submit an issue describing your scenario & API expectation.
 
+
 ## With Vanilla Javascript/Typescript
 
 🚀🚀🚀 [Please see the test for detailed usage.](https://github.dev/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.test.ts) 🚀🚀🚀
+
 
 ## Integration with React
 By leveraging [useSyncExternalStoreWithSelector](https://github.com/reactwg/react-18/discussions/86).
@@ -113,9 +117,19 @@ function Component() {
 binder.unbind()
 ```
 
+
 # Demos
 Data will sync between multiple browser tabs automatically.
 * [Messages Object](https://codesandbox.io/s/immer-yjs-demo-6e0znb)
+
+
+# Changelog
+[Changelog](https://github.com/sep2/immer-yjs/blob/main/packages/immer-yjs/CHANGELOG.md)
+
+
+# Contributions are welcome
+Please see [discussion here](https://github.com/sep2/immer-yjs/issues/1).
+
 
 # Similar projects
 [valtio-yjs](https://github.com/dai-shi/valtio-yjs)
