@@ -52,9 +52,15 @@ Y.transact(doc, () => {
 
 # Documentation
 
-`Y.Map` binds to plain object `{}`, `Y.Array` binds to plain array `[]`, and any level of nested `Y.Map`/`Y.Array` is also supported, which binds to nested plain json data.
+`Y.Map` binds to plain object `{}`, `Y.Array` binds to plain array `[]`, and any level of nested `Y.Map`/`Y.Array` is also supported, which binds to nested plain json object/array respectively.
 
-Modifications in `y.js` data types are reflected to the snapshot of their corresponding plain json bindings. Calling `update(...)` (similar to `produce(...)` in `immer`) will generate a new snapshot as well as update their corresponding `y.js` types.
+Creating a binding via `const binder = bind(doc.getMap("state"))`.
+
+Add subscription to the snapshot by `binder.subscribe(listener)`.
+
+Mutations in `y.js` data types will trigger snapshot subscriptions.
+
+Calling `update(...)` (similar to `produce(...)` in `immer`) will update their corresponding `y.js` types and also trigger snapshot subscriptions.
 
 `Y.XmlElement` & `Y.Text` have no equivalent to json data types, so they are not supported. If you want to use them, please use the `y.js` top-level type (e.g. `doc.getText("xxx")`) directly, or submit an issue describing your scenario & API expectation.
 
