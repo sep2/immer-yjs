@@ -52,9 +52,9 @@ Y.transact(doc, () => {
 
 # Documentation
 
-Creating a binding via `const binder = bind(doc.getMap("state"))`.
+Create a binding: `const binder = bind(doc.getMap("state"))`.
 
-Add subscription to the snapshot by `binder.subscribe(listener)`.
+Add subscription to the snapshot: `binder.subscribe(listener)`.
 
 Mutations in `y.js` data types will trigger snapshot subscriptions.
 
