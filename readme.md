@@ -9,9 +9,9 @@ Combine immer & y.js
 # What is this
 [immer](https://github.com/immerjs/immer) is a library for easy immutable data manipulation using plain json structure. [y.js](https://github.com/yjs/yjs) is a CRDT library with mutation-based API. `immer-yjs` allows manipulating `y.js` data types with the api provided by `immer`.
 
-Efficient update is enabled by generating a new snapshot while mutating the exact part changed in the previous one, nothing more, just like with `immer`. Any change comes from `y.js` is also reflected in the new snapshot in the least impact manner.
+Efficient update is enabled by generating a new snapshot while mutating the exact part changed in the previous one, nothing more, just like with `immer`. Any change comes from `y.js` is also reflected in the new snapshot in the least impact manner. Unchanged properties are structurally shared with the old snapshot.
 
-This library is very simple and small, just ~200 lines of code, [no magic hidden behind](https://github.dev/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.ts).
+This library is very simple and small, just ~200 lines of code, [no magic hidden behind](https://github.com/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.ts).
 
 Do:
 ```js
@@ -52,14 +52,16 @@ Y.transact(doc, () => {
 
 # Documentation
 
-`Y.Map` binds to plain object `{}`, `Y.Array` binds to plain array `[]`, and any level of nested `Y.Map`/`Y.Array` is also supported, which binds to nested plain json data. Modifications in `y.js` data types are reflected to the snapshot of their corresponding plain json bindings. Calling `update(...)` (similar to `produce(...)` in `immer`) will generate a new snapshot as well as update their corresponding `y.js` types.
+`Y.Map` binds to plain object `{}`, `Y.Array` binds to plain array `[]`, and any level of nested `Y.Map`/`Y.Array` is also supported, which binds to nested plain json data.
+
+Modifications in `y.js` data types are reflected to the snapshot of their corresponding plain json bindings. Calling `update(...)` (similar to `produce(...)` in `immer`) will generate a new snapshot as well as update their corresponding `y.js` types.
 
 `Y.XmlElement` & `Y.Text` have no equivalent to json data types, so they are not supported. If you want to use them, please use the `y.js` top-level type (e.g. `doc.getText("xxx")`) directly, or submit an issue describing your scenario & API expectation.
 
 
 ## With Vanilla Javascript/Typescript
 
-🚀🚀🚀 [Please see the test for detailed usage.](https://github.dev/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.test.ts) 🚀🚀🚀
+🚀🚀🚀 [Please see the test for detailed usage.](https://github.com/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.test.ts) 🚀🚀🚀
 
 
 ## Integration with React
