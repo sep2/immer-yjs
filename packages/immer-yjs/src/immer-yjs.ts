@@ -1,59 +1,61 @@
 import produce, { enablePatches, Patch, produceWithPatches } from 'immer'
 import * as Y from 'yjs'
 
-import { JSONArray, JSONObject } from './types'
+import { JSONArray, JSONObject, JSONValue } from './types'
 import { isJSONArray, isJSONObject, notImplemented, toPlainValue, toYDataType } from './util'
 
 enablePatches()
 
 export type Snapshot = JSONObject | JSONArray
 
-function applyEvents<S extends Snapshot>(snapshot: S, events: Y.YEvent[]) {
-    return produce(snapshot, (d) => {
-        events.forEach((event) => {
+function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent) {
+    if (event instanceof Y.YMapEvent && isJSONObject(base)) {
+        const source = event.target as Y.Map<any>
+
+        event.changes.keys.forEach((change, key) => {
+            switch (change.action) {
+                case 'add':
+                case 'update':
+                    base[key] = toPlainValue(source.get(key))
+                    break
+                case 'delete':
+                    delete base[key]
+                    break
+            }
+        })
+    } else if (event instanceof Y.YArrayEvent && isJSONArray(base)) {
+        const arr = base as unknown as any[]
+
+        let retain = 0
+        event.changes.delta.forEach((change) => {
+            if (change.retain) {
+                retain += change.retain
+            }
+            if (change.delete) {
+                arr.splice(retain, change.delete)
+            }
+            if (change.insert) {
+                if (Array.isArray(change.insert)) {
+                    arr.splice(retain, 0, ...change.insert.map(toPlainValue))
+                } else {
+                    arr.splice(retain, 0, toPlainValue(change.insert))
+                }
+                retain += change.insert.length
+            }
+        })
+    }
+}
+
+function applyYEvents<S extends Snapshot>(snapshot: S, events: Y.YEvent[]) {
+    return produce(snapshot, (target) => {
+        for (const event of events) {
             const base = event.path.reduce((obj, step) => {
                 // @ts-ignore
                 return obj[step]
-            }, d)
+            }, target)
 
-            if (event instanceof Y.YMapEvent && isJSONObject(base)) {
-                const source = event.target as Y.Map<any>
-
-                event.changes.keys.forEach((change, key) => {
-                    switch (change.action) {
-                        case 'add':
-                        case 'update':
-                            base[key] = toPlainValue(source.get(key))
-                            break
-                        case 'delete':
-                            delete base[key]
-                            break
-                    }
-                })
-            } else if (event instanceof Y.YArrayEvent && isJSONArray(base)) {
-                const arr = base as unknown as any[]
-
-                let retain = 0
-                event.changes.delta.forEach((change) => {
-                    if (change.retain) {
-                        retain += change.retain
-                    }
-                    if (change.delete) {
-                        arr.splice(retain, change.delete)
-                    }
-                    if (change.insert) {
-                        if (Array.isArray(change.insert)) {
-                            arr.splice(retain, 0, ...change.insert.map(toPlainValue))
-                        } else {
-                            arr.splice(retain, 0, toPlainValue(change.insert))
-                        }
-                        retain += change.insert.length
-                    }
-                })
-            } else {
-                notImplemented()
-            }
-        })
+            applyYEvent(base, event)
+        }
     })
 }
 
@@ -61,7 +63,7 @@ const PATCH_REPLACE = 'replace'
 const PATCH_ADD = 'add'
 const PATCH_REMOVE = 'remove'
 
-function applyPatch(target: Y.Map<any> | Y.Array<any>, patch: Patch) {
+function defaultApplyPatch(target: Y.Map<any> | Y.Array<any>, patch: Patch) {
     const { path, op, value } = patch
 
     if (!path.length) {
@@ -76,7 +78,7 @@ function applyPatch(target: Y.Map<any> | Y.Array<any>, patch: Patch) {
             }
         } else if (target instanceof Y.Array && isJSONArray(value)) {
             target.delete(0, target.length)
-            target.push(patch.value.map(toYDataType))
+            target.push(value.map(toYDataType))
         } else {
             notImplemented()
         }
@@ -122,22 +124,63 @@ function applyPatch(target: Y.Map<any> | Y.Array<any>, patch: Patch) {
 
 export type UpdateFn<S extends Snapshot> = (draft: S) => void
 
-function applyUpdate<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, snapshot: S, fn: UpdateFn<S>) {
+function applyUpdate<S extends Snapshot>(
+    source: Y.Map<any> | Y.Array<any>,
+    snapshot: S,
+    fn: UpdateFn<S>,
+    applyPatch: typeof defaultApplyPatch
+) {
     const [, patches] = produceWithPatches(snapshot, fn)
-    patches.forEach((patch) => applyPatch(source, patch))
+    for (const patch of patches) {
+        applyPatch(source, patch)
+    }
 }
 
 export type ListenerFn<S extends Snapshot> = (snapshot: S) => void
 export type UnsubscribeFn = () => void
 
 export type Binder<S extends Snapshot> = {
+    /**
+     * Release the binder.
+     */
     unbind: () => void
+
+    /**
+     * Return the latest snapshot.
+     */
     get: () => S
+
+    /**
+     * Update the snapshot as well as the corresponding y.js data.
+     * Same usage as `produce` from `immer`.
+     */
     update: (fn: UpdateFn<S>) => void
+
+    /**
+     * Subscribe to snapshot update, fired when:
+     *   1. User called update(fn).
+     *   2. y.js source.observeDeep() fired.
+     */
     subscribe: (fn: ListenerFn<S>) => UnsubscribeFn
 }
 
-export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>): Binder<S> {
+export type Options<S extends Snapshot> = {
+    /**
+     * Customize immer patch application.
+     * Should apply patch to the target y.js data.
+     * @param target The y.js data to be modified.
+     * @param patch The patch that should be applied, please refer to 'immer' patch documentation.
+     * @param applyPatch the default behavior to apply patch, call this to handle the normal case.
+     */
+    applyPatch?: (target: Y.Map<any> | Y.Array<any>, patch: Patch, applyPatch: typeof defaultApplyPatch) => void
+}
+
+/**
+ * Bind y.js data type.
+ * @param source The y.js data type to bind.
+ * @param options Change default behavior, can be omitted.
+ */
+export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, options?: Options<S>): Binder<S> {
     let snapshot = source.toJSON() as S
 
     const get = () => snapshot
@@ -150,22 +193,30 @@ export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>): Bin
     }
 
     const observer = (events: Y.YEvent[]) => {
-        snapshot = applyEvents(get(), events)
+        snapshot = applyYEvents(get(), events)
         subscription.forEach((fn) => fn(get()))
     }
 
     source.observeDeep(observer)
     const unbind = () => source.unobserveDeep(observer)
 
+    const applyPatchInOption = options?.applyPatch
+
+    const applyPatch = applyPatchInOption
+        ? (target: Y.Map<any> | Y.Array<any>, patch: Patch) => applyPatchInOption(target, patch, defaultApplyPatch)
+        : defaultApplyPatch
+
     const update = (fn: UpdateFn<S>) => {
         const doc = source.doc
 
+        const doApplyUpdate = () => {
+            applyUpdate(source, get(), fn, applyPatch)
+        }
+
         if (doc) {
-            Y.transact(doc, () => {
-                applyUpdate(source, get(), fn)
-            })
+            Y.transact(doc, doApplyUpdate)
         } else {
-            applyUpdate(source, get(), fn)
+            doApplyUpdate()
         }
     }
 

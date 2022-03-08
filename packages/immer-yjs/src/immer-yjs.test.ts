@@ -22,6 +22,9 @@ test('bind usage demo', () => {
         return initialObj
     })
 
+    // snapshot reference should not change if no update
+    expect(binder.get()).toBe(binder.get())
+
     // get current state as snapshot
     const snapshot1 = binder.get()
 
@@ -120,4 +123,30 @@ test('boolean in array', () => {
     })
 
     expect(map.toJSON()).toStrictEqual({ k1: true, k2: false, k3: [true, false, true] })
+})
+
+test('customize applyPatch', () => {
+    const doc = new Y.Doc()
+
+    const map = doc.getMap('data')
+
+    const initialObj = createSampleObject() // plain object
+
+    const binder = bind<typeof initialObj>(map, {
+        applyPatch: (target, patch, applyPatch) => {
+            // you can inspect the patch.path and decide what to do with target
+            // optionally delegate to the default patch handler
+            // (modify target/patch before delegating as you want)
+            applyPatch(target, patch)
+            // can also postprocessing after the default behavior is applied
+        },
+    })
+
+    binder.update(() => initialObj)
+
+    expect(binder.get()).toStrictEqual(initialObj)
+
+    expect(binder.get()).toStrictEqual(map.toJSON())
+
+    expect(binder.get()).toBe(binder.get())
 })
