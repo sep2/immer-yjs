@@ -2,15 +2,7 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### 0.1.1 (2022-03-08)
-
-
-### Features
-
-* export default bind ([e54e3cc](https://github.com/sep2/immer-yjs/commit/e54e3cca0a8df6971fbe821be00af3440bcd5b9e))
-
-
-### 0.1.0 (2022-03-08)
+### 0.1.2 (2022-03-08)
 
 
 ### Features
