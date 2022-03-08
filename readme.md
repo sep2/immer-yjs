@@ -9,12 +9,13 @@ Combine immer & y.js
 # What is this
 [immer](https://github.com/immerjs/immer) is a library for easy immutable data manipulation using plain json structure. [y.js](https://github.com/yjs/yjs) is a CRDT library with mutation-based API. `immer-yjs` allows manipulating `y.js` data types with the api provided by `immer`.
 
-1. Two-way binding between y.js and plain json object.
-2. Efficient snapshot update with structural sharing, same as `immer`.
-3. Always opt-in, non-intrusive by nature (the snapshot is just a plain object after all).
-4. The snapshot shape & y.js binding aims to be fully customizable.
-5. Typescript all the way (pure js is also supported).
-6. Code is simple and small, [no magic hidden behind](https://github.com/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.ts), no vendor-locking.
+* Two-way binding between y.js and plain json object.
+* Efficient snapshot update with structural sharing, same as `immer`.
+* Updates to y.js are explicitly batched in transaction, you control the transaction boundary.
+* Always opt-in, non-intrusive by nature (the snapshot is just a plain object after all).
+* The snapshot shape & y.js binding aims to be fully customizable.
+* Typescript all the way (pure js is also supported).
+* Code is simple and small, [no magic hidden behind](https://github.com/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.ts), no vendor-locking.
 
 Do:
 ```js
