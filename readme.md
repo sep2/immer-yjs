@@ -9,13 +9,13 @@ Combine immer & y.js
 # What is this
 [immer](https://github.com/immerjs/immer) is a library for easy immutable data manipulation using plain json structure. [y.js](https://github.com/yjs/yjs) is a CRDT library with mutation-based API. `immer-yjs` allows manipulating `y.js` data types with the api provided by `immer`.
 
-* Two-way binding between y.js and plain json object.
+* Two-way binding between y.js and plain (nested) json object/array.
 * Efficient snapshot update with structural sharing, same as `immer`.
-* Updates to y.js are explicitly batched in transaction, you control the transaction boundary.
+* Updates to `y.js` are explicitly batched in transaction, you control the transaction boundary.
 * Always opt-in, non-intrusive by nature (the snapshot is just a plain object after all).
 * The snapshot shape & y.js binding aims to be fully customizable.
 * Typescript all the way (pure js is also supported).
-* Code is simple and small, [no magic hidden behind](https://github.com/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.ts), no vendor-locking.
+* Code is simple and small, no magic hidden behind, no vendor-locking.
 
 Do:
 ```js
@@ -31,7 +31,7 @@ update(state => {
 
 Instead of:
 ```js
-Y.transact(doc, () => {
+Y.transact(state.doc, () => {
     const val = new Y.Map()
     val.set("id", 123)
     val.set("p1", "a")
