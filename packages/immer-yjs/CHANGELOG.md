@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.3 (2022-03-08)
+
+
+### Features
+
+* add option to configure applyPatch ([41cb3e8](https://github.com/sep2/immer-yjs/commit/41cb3e8dd316bbfd19045aba2590ccb331be523d))
+* export default bind ([e54e3cc](https://github.com/sep2/immer-yjs/commit/e54e3cca0a8df6971fbe821be00af3440bcd5b9e))
+
+
+### Bug Fixes
+
+* support mutating root type ([0a42efe](https://github.com/sep2/immer-yjs/commit/0a42efed8c2249d640d9bbcf4279fe3d555d7560))
+
 ### 0.1.2 (2022-03-08)
 
 
