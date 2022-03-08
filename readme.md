@@ -56,7 +56,7 @@ Y.transact(state.doc, () => {
    1. Mutations in `y.js` data types will trigger snapshot subscriptions.
    2. Calling `update(...)` (similar to `produce(...)` in `immer`) will update their corresponding `y.js` types and also trigger snapshot subscriptions.
 4. Call `binder.get()` to get the latest snapshot.
-5. Call `binder.unbind()` to release the observer (only if you don't want to bind them anymore).
+5. (Optionally) call `binder.unbind()` to release the observer.
 
 `Y.Map` binds to plain object `{}`, `Y.Array` binds to plain array `[]`, and any level of nested `Y.Map`/`Y.Array` binds to nested plain json object/array respectively.
 
