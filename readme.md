@@ -49,7 +49,7 @@ Y.transact(doc, () => {
 
 
 # Documentation
-1. `import bind from 'immer-yjs'`.
+1. `import { bind } from 'immer-yjs'`.
 2. Create a binder: `const binder = bind(doc.getMap("state"))`.
 3. Add subscription to the snapshot: `binder.subscribe(listener)`.
    1. Mutations in `y.js` data types will trigger snapshot subscriptions.
