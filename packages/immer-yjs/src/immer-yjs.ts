@@ -200,7 +200,7 @@ export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, opti
     source.observeDeep(observer)
     const unbind = () => source.unobserveDeep(observer)
 
-    const applyPatchInOption = options?.applyPatch
+    const applyPatchInOption = options ? options.applyPatch : undefined
 
     const applyPatch = applyPatchInOption
         ? (target: Y.Map<any> | Y.Array<any>, patch: Patch) => applyPatchInOption(target, patch, defaultApplyPatch)
