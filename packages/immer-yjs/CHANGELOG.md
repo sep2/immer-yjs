@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/sep2/immer-yjs/compare/v0.1.3...v0.1.4) (2022-03-17)
+
+
+### Bug Fixes
+
+* bundle badge ([a1c77dd](https://github.com/sep2/immer-yjs/commit/a1c77dded078b33e8f0c1507847052b21589b59d))
+
 ### 0.1.3 (2022-03-08)
 
 
