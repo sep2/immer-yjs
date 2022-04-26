@@ -8,7 +8,7 @@ enablePatches()
 
 export type Snapshot = JSONObject | JSONArray
 
-function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent) {
+function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent<any>) {
     if (event instanceof Y.YMapEvent && isJSONObject(base)) {
         const source = event.target as Y.Map<any>
 
@@ -46,7 +46,7 @@ function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent) {
     }
 }
 
-function applyYEvents<S extends Snapshot>(snapshot: S, events: Y.YEvent[]) {
+function applyYEvents<S extends Snapshot>(snapshot: S, events: Y.YEvent<any>[]) {
     return produce(snapshot, (target) => {
         for (const event of events) {
             const base = event.path.reduce((obj, step) => {
@@ -192,7 +192,7 @@ export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, opti
         return () => void subscription.delete(fn)
     }
 
-    const observer = (events: Y.YEvent[]) => {
+    const observer = (events: Y.YEvent<any>[]) => {
         snapshot = applyYEvents(get(), events)
         subscription.forEach((fn) => fn(get()))
     }
