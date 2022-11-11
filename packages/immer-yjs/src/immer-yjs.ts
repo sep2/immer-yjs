@@ -117,6 +117,11 @@ function defaultApplyPatch(target: Y.Map<any> | Y.Array<any>, patch: Patch) {
                 base.delete(property)
                 break
         }
+    } else if (base instanceof Y.Array && property === 'length') {
+        if (value < base.length) {
+            const diff = base.length - value
+            base.delete(value, diff)
+        }
     } else {
         notImplemented()
     }
