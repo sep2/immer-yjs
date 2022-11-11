@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { describe, expect, test } from 'vitest'
 import * as Y from 'yjs'
 
 import { bind } from './immer-yjs'
@@ -149,4 +149,109 @@ test('customize applyPatch', () => {
     expect(binder.get()).toStrictEqual(map.toJSON())
 
     expect(binder.get()).toBe(binder.get())
+})
+
+describe('array splice', () => {
+    function prepareArrayDoc(...items: number[]) {
+        const doc = new Y.Doc()
+        const binder = bind<{ array: number[] }>(doc.getMap('data'), {
+            applyPatch: (target, patch, apply) => {
+                apply(target, patch)
+            },
+        })
+        binder.update((data) => {
+            data.array = items
+        })
+        return { doc, binder }
+    }
+
+    test('remove nonexistent item', () => {
+        const { binder } = prepareArrayDoc()
+
+        binder.update((data) => {
+            data.array.splice(0, 1)
+        })
+
+        expect(binder.get().array.length).toBe(0)
+    })
+
+    test('remove single item', () => {
+        const { binder } = prepareArrayDoc(1)
+
+        binder.update((data) => {
+            data.array.splice(0, 1)
+        })
+
+        expect(binder.get().array.length).toBe(0)
+    })
+
+    test('remove first item of many', () => {
+        const { binder } = prepareArrayDoc(1, 2, 3)
+
+        // results in ops
+        // replace array[0] value 2
+        // replace array[1] value 3
+        // replace array.length value 2
+        binder.update((data) => {
+            data.array.splice(0, 1)
+        })
+
+        expect(binder.get().array.length).toBe(2)
+    })
+
+    test('remove last multiple items', () => {
+        const { binder } = prepareArrayDoc(1, 2, 3, 4)
+
+        binder.update((data) => {
+            data.array.splice(2, 2)
+        })
+
+        const result = binder.get().array
+        expect(result.length).toBe(2)
+        expect(result[0]).toBe(1)
+        expect(result[1]).toBe(2)
+    })
+
+    test('replace last multiple items', () => {
+        const { binder } = prepareArrayDoc(1, 2, 3, 4)
+
+        binder.update((data) => {
+            data.array.splice(2, 2, 5, 6)
+        })
+
+        const result = binder.get().array
+        expect(result.length).toBe(4)
+        expect(result[0]).toBe(1)
+        expect(result[1]).toBe(2)
+        expect(result[2]).toBe(5)
+        expect(result[3]).toBe(6)
+    })
+
+    test('remove first multiple items', () => {
+        const { binder } = prepareArrayDoc(1, 2, 3, 4)
+
+        binder.update((data) => {
+            data.array.splice(0, 2)
+        })
+
+        const result = binder.get().array
+        expect(result.length).toBe(2)
+        expect(result[0]).toBe(3)
+        expect(result[1]).toBe(4)
+    })
+
+    test('replace first multiple items', () => {
+        const { binder } = prepareArrayDoc(1, 2, 3, 4)
+
+        binder.update((data) => {
+            data.array.splice(0, 2, 5, 6)
+        })
+
+        const result = binder.get().array
+        expect(result.length).toBe(4)
+        expect(result[0]).toBe(5)
+        expect(result[1]).toBe(6)
+        expect(result[2]).toBe(3)
+        expect(result[3]).toBe(4)
+    })
 })
