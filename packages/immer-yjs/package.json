@@ -10,16 +10,16 @@
     },
     "main": "./dist/immer-yjs.umd.js",
     "module": "./dist/immer-yjs.es.js",
-    "types": "./dist/immer-yjs.es.d.js",
+    "types": "./dist/index.d.js",
     "exports": {
         ".": {
             "import": "./dist/immer-yjs.es.js",
-            "require": "./dist/immer-yjs.umd.js"
+            "require": "./dist/immer-yjs.umd.js",
+            "types": "./dist/index.d.ts"
         }
     },
     "files": [
-        "dist",
-        "src"
+        "dist"
     ],
     "scripts": {
         "build": "tsc && vite build",
@@ -36,7 +36,7 @@
         "standard-version": "^9.3.2",
         "typescript": "^4.6.3",
         "vite": "^2.9.6",
-        "vite-dts": "^1.0.4",
+        "vite-plugin-dts": "^3.9.1",
         "vitest": "^0.10.0",
         "yjs": "^13.5.35"
     },
