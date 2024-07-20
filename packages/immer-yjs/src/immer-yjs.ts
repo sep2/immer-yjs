@@ -1,4 +1,4 @@
-import produce, { enablePatches, Patch, produceWithPatches } from 'immer'
+import { enablePatches, Patch, produce, produceWithPatches } from 'immer'
 import * as Y from 'yjs'
 
 import { JSONArray, JSONObject, JSONValue } from './types'
