@@ -12,13 +12,11 @@ export function isJSONArray(v: JSONValue): v is JSONArray {
 }
 
 export function isJSONObject(v: JSONValue): v is JSONObject {
-    return !isJSONArray(v) && typeof v === 'object'
+    return !isJSONArray(v) && typeof v === 'object' && v !== null
 }
 
 export function toYDataType(v: JSONValue) {
-    if (isJSONPrimitive(v)) {
-        return v
-    } else if (isJSONArray(v)) {
+    if (isJSONArray(v)) {
         const arr = new Y.Array()
         applyJsonArray(arr, v)
         return arr
@@ -27,7 +25,7 @@ export function toYDataType(v: JSONValue) {
         applyJsonObject(map, v)
         return map
     } else {
-        return undefined
+        return v
     }
 }
 
@@ -41,7 +39,7 @@ export function applyJsonObject(dest: Y.Map<unknown>, source: JSONObject) {
     })
 }
 
-export function toPlainValue(v: Y.Map<any> | Y.Array<any> | JSONValue) {
+export function toPlainValue(v: Y.Map<unknown> | Y.Array<unknown> | JSONValue) {
     if (v instanceof Y.Map || v instanceof Y.Array) {
         return v.toJSON() as JSONObject | JSONArray
     } else {
@@ -49,6 +47,6 @@ export function toPlainValue(v: Y.Map<any> | Y.Array<any> | JSONValue) {
     }
 }
 
-export function notImplemented() {
+export function notImplemented(): never {
     throw new Error('not implemented')
 }
