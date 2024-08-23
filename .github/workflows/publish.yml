@@ -13,13 +13,13 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: 'npm'
+          node-version: 20
+          cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
       - name: Install
-        run: npm install --workspace=immer-yjs
+        run: yarn install --immutable
       - name: Build
-        run: npm run build --workspace=immer-yjs
+        run: yarn build
       - name: Copy README into the workspace
         run: cp README.md packages/immer-yjs/
       - name: Publish to NPM

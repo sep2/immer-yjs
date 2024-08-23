@@ -11,7 +11,9 @@
         "publish": "yarn workspace immer-yjs npm publish",
         "release": "yarn workspace immer-yjs release",
         "lint": "eslint --ext .js,.ts --ignore-path .gitignore --fix packages",
-        "format": "prettier . --write"
+        "format": "prettier . --write",
+        "check:formatting": "prettier . --check",
+        "check:types": "yarn workspace immer-yjs check:types"
     },
     "devDependencies": {
         "@types/node": "^17.0.21",
