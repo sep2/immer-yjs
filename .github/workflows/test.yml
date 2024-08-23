@@ -16,16 +16,21 @@ jobs:
       - name: Install
         run: yarn install --immutable
       - name: Check Code Formatting
+        if: always()
         run: yarn check:formatting
       - name: Check Types
+        if: always()
         run: yarn check:types
-      #        No linters for this repo (yet)
-      #      - name: Lint
-      #        run: |
-      #          yarn lint
+#      No linters for this repo (yet)
+#      - name: Lint
+#        if: always()
+#        run: yarn lint
       - name: Test
+        if: always()
         run: yarn test
       - name: Build
+        if: always()
         run: yarn build
       - name: Test Build Output
+        if: always()
         run: yarn build
