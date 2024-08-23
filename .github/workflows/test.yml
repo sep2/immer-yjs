@@ -21,10 +21,9 @@ jobs:
       - name: Check Types
         if: always()
         run: yarn check:types
-#      No linters for this repo (yet)
-#      - name: Lint
-#        if: always()
-#        run: yarn lint
+      - name: Lint
+        if: always()
+        run: yarn lint
       - name: Test
         if: always()
         run: yarn test
