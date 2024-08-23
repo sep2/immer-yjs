@@ -1,0 +1,31 @@
+name: Tests
+on: ['push']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Code Inspection
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+      - name: Set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install
+        run: npm install
+      - name: Check Code Formatting
+        run: npm run check:formatting --workspace=immer-yjs
+      - name: Check Types
+        run: npm run check:types --workspace=immer-yjs
+      #        No linters for this repo (yet)
+      #      - name: Lint
+      #        run: |
+      #          npm run lint
+      - name: Test
+        run: npm run test --workspace=immer-yjs
+      - name: Build
+        run: npm run build --workspace=immer-yjs
+      - name: Test Build Output
+        run: npm run build --workspace=test-app
