@@ -10,22 +10,22 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: 'npm'
+          node-version: 20
+          cache: 'yarn'
           registry-url: 'https://registry.npmjs.org'
       - name: Install
-        run: npm install
+        run: yarn install --immutable
       - name: Check Code Formatting
-        run: npm run check:formatting --workspace=immer-yjs
+        run: yarn check:formatting
       - name: Check Types
-        run: npm run check:types --workspace=immer-yjs
+        run: yarn check:types
       #        No linters for this repo (yet)
       #      - name: Lint
       #        run: |
-      #          npm run lint
+      #          yarn lint
       - name: Test
-        run: npm run test --workspace=immer-yjs
+        run: yarn test
       - name: Build
-        run: npm run build --workspace=immer-yjs
+        run: yarn build
       - name: Test Build Output
-        run: npm run build --workspace=test-app
+        run: yarn build
