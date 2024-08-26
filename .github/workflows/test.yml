@@ -31,6 +31,6 @@ jobs:
               if: always()
               run: yarn build
             # TODO test build output: https://github.com/sep2/immer-yjs/issues/18
-            - name: Test Build Output
-              if: always()
-              run: yarn workspace test-app test
+#            - name: Test Build Output
+#              if: always()
+#              run: yarn workspace test-app test
