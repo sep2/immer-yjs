@@ -70,7 +70,7 @@ Y.transact(state.doc, () => {
 🚀🚀🚀 [Please see the test for detailed usage.](https://github.com/sep2/immer-yjs/blob/main/packages/immer-yjs/src/immer-yjs.test.ts) 🚀🚀🚀
 
 ## Customize binding & schema
-Use the [`applyPatch` option](https://github.com/sep2/immer-yjs/blob/6b50fdfa85c9ca8ac850075bda7ef456337c7d55/packages/immer-yjs/src/immer-yjs.test.ts#L136) to customize it. Check the [discussion](https://github.com/sep2/immer-yjs/issues/1) for detailed background.
+Use the [`applyPatch` option](https://github.com/sep2/immer-yjs/blob/6b50fdfa85c9ca8ac850075bda7ef456337c7d55/packages/immer-yjs/src/immer-yjs.test.ts#L136) to customize it. Check the [discussion](https://github.com/sep2/immer-yjs/issues/1) for detailed background. **This section will likely be removed since it is not functioning properly. A new impl may be needed**
 
 ## Integration with React
 By leveraging [useSyncExternalStoreWithSelector](https://github.com/reactwg/react-18/discussions/86).
