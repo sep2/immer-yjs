@@ -546,11 +546,15 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^5.0.0"
     eslint-plugin-react-refresh: "npm:^0.4.14"
     globals: "npm:^15.12.0"
+    immer: "npm:^10.1.1"
+    immer-yjs: "workspace:*"
+    immer-yjs-react: "workspace:*"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     typescript: "npm:~5.6.2"
     typescript-eslint: "npm:^8.15.0"
     vite: "npm:^6.0.1"
+    yjs: "npm:^13.6.23"
   languageName: unknown
   linkType: soft
 
@@ -1128,6 +1132,15 @@ __metadata:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: c9bbdfeacd5347d2240e0d2cb5336bc57dbc1b9ff557b6c4024b49df83419e4955553518169d3736039f1b62608e15b35762a6c03d49bd86e33add4b43b19033
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^19.0.8":
+  version: 19.0.8
+  resolution: "@types/react@npm:19.0.8"
+  dependencies:
+    csstype: "npm:^3.0.2"
+  checksum: 1080d5b96ee0b4395f8f167ae6952f570088ee03bdce69f8237aab82c32d9bd2b71106f787bac17ba351acc4aba5e3454bafca51f2eb11d1562073b821e63d15
   languageName: node
   linkType: hard
 
@@ -4017,6 +4030,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"immer-yjs-react@workspace:*, immer-yjs-react@workspace:packages/immer-yjs-react":
+  version: 0.0.0-use.local
+  resolution: "immer-yjs-react@workspace:packages/immer-yjs-react"
+  dependencies:
+    "@types/react": "npm:^19.0.8"
+    immer: "npm:9.0.21"
+    immer-yjs: "workspace:*"
+    react: "npm:^19.0.0"
+    typescript: "npm:^5.7.3"
+    yjs: "npm:^13.6.18"
+  peerDependencies:
+    immer: 10.1.1
+    immer-yjs: "workspace:*"
+    react: ^18.0.0 || ^19.0.0
+    yjs: ^13.0
+  languageName: unknown
+  linkType: soft
+
 "immer-yjs@workspace:*, immer-yjs@workspace:packages/immer-yjs":
   version: 0.0.0-use.local
   resolution: "immer-yjs@workspace:packages/immer-yjs"
@@ -4496,6 +4527,19 @@ __metadata:
     0gentesthtml: bin/gentesthtml.js
     0serve: bin/0serve.js
   checksum: 8ec7fb66e211b5041d988e93d768b47946f820dfbf65b9aeb5350041b09ec6fa86d528dc1605fc79eb4d66db6b5391a0e6bf73392c3d53f5a4601430664712c9
+  languageName: node
+  linkType: hard
+
+"lib0@npm:^0.2.99":
+  version: 0.2.99
+  resolution: "lib0@npm:0.2.99"
+  dependencies:
+    isomorphic.js: "npm:^0.2.4"
+  bin:
+    0ecdsa-generate-keypair: bin/0ecdsa-generate-keypair.js
+    0gentesthtml: bin/gentesthtml.js
+    0serve: bin/0serve.js
+  checksum: 825f248d31fc85241d322365d838aa4902ee5d97e12b8a14ac1234d0ec1c3263fa217057a2d167ec734f3037b89fd6d514a29b4a768cdf677e57d2a2692a5827
   languageName: node
   linkType: hard
 
@@ -5434,16 +5478,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-immer-yjs@workspace:packages/react-immer-yjs":
-  version: 0.0.0-use.local
-  resolution: "react-immer-yjs@workspace:packages/react-immer-yjs"
-  dependencies:
-    immer: "npm:9.0.21"
-    immer-yjs: "workspace:*"
-    yjs: "npm:^13.6.18"
-  languageName: unknown
-  linkType: soft
-
 "react-refresh@npm:^0.14.2":
   version: 0.14.2
   resolution: "react-refresh@npm:0.14.2"
@@ -5457,6 +5491,13 @@ __metadata:
   dependencies:
     loose-envify: "npm:^1.1.0"
   checksum: 261137d3f3993eaa2368a83110466fc0e558bc2c7f7ae7ca52d94f03aac945f45146bd85e5f481044db1758a1dbb57879e2fcdd33924e2dde1bdc550ce73f7bf
+  languageName: node
+  linkType: hard
+
+"react@npm:^19.0.0":
+  version: 19.0.0
+  resolution: "react@npm:19.0.0"
+  checksum: 2490969c503f644703c88990d20e4011fa6119ddeca451e9de48f6d7ab058d670d2852a5fcd3aa3cd90a923ab2815d532637bd4a814add402ae5c0d4f129ee71
   languageName: node
   linkType: hard
 
@@ -6400,6 +6441,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:^5.7.3":
+  version: 5.7.3
+  resolution: "typescript@npm:5.7.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 6a7e556de91db3d34dc51cd2600e8e91f4c312acd8e52792f243c7818dfadb27bae677175fad6947f9c81efb6c57eb6b2d0c736f196a6ee2f1f7d57b74fc92fa
+  languageName: node
+  linkType: hard
+
 "typescript@npm:~5.6.2":
   version: 5.6.3
   resolution: "typescript@npm:5.6.3"
@@ -6437,6 +6488,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 55d092009e2fd0586d86fba9f64e70799bd25fdad81eb252d1270d60dc1f1db1dfa43cf536fe86b4fad2540032ae649d3520b448bed92edf2f4624ca7104b892
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>":
+  version: 5.7.3
+  resolution: "typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>::version=5.7.3&hash=29ae49"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 3ac7b7e3e899273d2fbdce6e24b93d4d53a705ad7a7e4cc83b4c57bcb6d25948abcd2a21994f6b9c73ab03960f395aae95f0458de292a66ce0134233261714c3
   languageName: node
   linkType: hard
 
@@ -6874,6 +6935,15 @@ __metadata:
   dependencies:
     lib0: "npm:^0.2.98"
   checksum: 7c64494f8bff24a95e237ed0e0c561efb9e8d451655620f04963dbbe5910b60e8ea978a0048fa377477493cbacbf002220f39445cf2ede298dc9a0f20ed5b942
+  languageName: node
+  linkType: hard
+
+"yjs@npm:^13.6.23":
+  version: 13.6.23
+  resolution: "yjs@npm:13.6.23"
+  dependencies:
+    lib0: "npm:^0.2.99"
+  checksum: cf5b9bcb9b3d55d28dc707c8e86a2773939ea5dca93006f55a6d9709a3023214c358ee50495451225fac77eef7726e132d6cb695bf44b69f9c022de4a23d6856
   languageName: node
   linkType: hard
 

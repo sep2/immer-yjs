@@ -10,8 +10,12 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "immer": "^10.1.1",
+        "immer-yjs": "workspace:*",
+        "immer-yjs-react": "workspace:*",
         "react": "^18.3.1",
-        "react-dom": "^18.3.1"
+        "react-dom": "^18.3.1",
+        "yjs": "^13.6.23"
     },
     "devDependencies": {
         "@eslint/js": "^9.15.0",

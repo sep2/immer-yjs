@@ -1,0 +1,21 @@
+{
+    "name": "immer-yjs-react",
+    "main": "src/index.ts",
+    "scripts": {
+        "check:types": "tsc --noEmit"
+    },
+    "peerDependencies": {
+        "immer": "10.1.1",
+        "immer-yjs": "workspace:*",
+        "react": "^18.0.0 || ^19.0.0",
+        "yjs": "^13.0"
+    },
+    "devDependencies": {
+        "@types/react": "^19.0.8",
+        "immer": "9.0.21",
+        "immer-yjs": "workspace:*",
+        "react": "^19.0.0",
+        "typescript": "^5.7.3",
+        "yjs": "^13.6.18"
+    }
+}

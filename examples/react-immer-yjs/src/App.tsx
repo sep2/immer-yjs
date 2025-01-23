@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react'
+import { AppWithGlobalStore } from './GlobalState.tsx'
 
-const App: FunctionComponent = () => {
-    return <div>Hello, World!</div>
+export const App: FunctionComponent = () => {
+    return <AppWithGlobalStore />
 }
