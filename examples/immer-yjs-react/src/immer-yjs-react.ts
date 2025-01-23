@@ -10,11 +10,6 @@ export const useBinder = <T extends Snapshot = Snapshot>(source: Y.Map<unknown> 
     return binder
 }
 
-export const createSelector =
-    <T extends Snapshot>(store: Binder<T>) =>
-    <Selection>(selector: (state: T) => Selection): Selection =>
-        useSelection(store, selector)
-
 export const useSelection = <T extends Snapshot, Selection>(
     binder: Binder<T>,
     selector: (state: T) => Selection
