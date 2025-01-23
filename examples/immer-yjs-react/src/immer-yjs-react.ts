@@ -6,7 +6,7 @@ export const useBinder = <T extends Snapshot = Snapshot>(source: Y.Map<unknown> 
     const binder = bind<T>(source)
     useEffect(() => {
         return binder.unbind
-    }, [])
+    }, [binder.unbind])
     return binder
 }
 
