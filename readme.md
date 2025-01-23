@@ -5,11 +5,6 @@
 
 Combine immer & y.js
 
-
-# Maintainer Wanted 
-The function of this package is stable. Since the ecosystem around changes very ofen and I no longer work with Y.JS so can't keep pace with it, the package will like to have new maintainers. If you would like to maintain this package please submit a PR to remove this notice.
-
-
 # What is this
 [immer](https://github.com/immerjs/immer) is a library for easy immutable data manipulation using plain json structure. [y.js](https://github.com/yjs/yjs) is a CRDT library with mutation-based API. `immer-yjs` allows manipulating `y.js` data types with the api provided by `immer`.
 
