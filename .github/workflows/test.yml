@@ -1,36 +1,37 @@
 name: Tests
 on: ['push']
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: Code Inspection
-    steps:
-      - name: Check out
-        uses: actions/checkout@v3
-      - name: Set up node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-          cache: 'yarn'
-          registry-url: 'https://registry.npmjs.org'
-      - name: Install
-        run: yarn install --immutable
-      - name: Check Code Formatting
-        if: always()
-        run: yarn check:formatting
-      - name: Check Types
-        if: always()
-        run: yarn check:types
-      - name: Lint
-        if: always()
-        run: yarn lint
-      - name: Test
-        if: always()
-        run: yarn test
-      - name: Build
-        if: always()
-        run: yarn build
+    build:
+        runs-on: ubuntu-latest
+        name: Code Inspection
+        steps:
+            - name: Check out
+              uses: actions/checkout@v3
+            - name: Set up node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 22
+                  cache: 'yarn'
+                  registry-url: 'https://registry.npmjs.org'
+            - name: Install
+              run: yarn install --immutable
+            - name: Check Code Formatting
+              if: always()
+              run: yarn check:formatting
+            - name: Check Types
+              if: always()
+              run: yarn check:types
+            - name: Lint
+              if: always()
+              run: yarn lint
+            - name: Test
+              if: always()
+              run: yarn test
+            - name: Build
+              if: always()
+              run: yarn build
 #        TODO test build output: https://github.com/sep2/immer-yjs/issues/18
 #      - name: Test Build Output
 #        if: always()
 #        run: yarn workspace test-app test
+
