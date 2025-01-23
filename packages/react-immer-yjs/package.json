@@ -1,0 +1,9 @@
+{
+  "name": "react-immer-yjs",
+  "main": "src/index.ts",
+  "dependencies": {
+    "immer": "9.0.21",
+    "immer-yjs": "workspace:*",
+    "yjs": "^13.6.18"
+  }
+}
