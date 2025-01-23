@@ -1,9 +1,9 @@
-name: Tests
+name: 'Code Integration Checks'
 on: ['push']
 jobs:
-    build:
+    integration-checks:
         runs-on: ubuntu-latest
-        name: Code Inspection
+        name: Code Integration Checks
         steps:
             - name: Check out
               uses: actions/checkout@v3
