@@ -1,6 +1,6 @@
 import { bind } from 'immer-yjs'
 import * as Y from 'yjs'
-import { useSelection } from 'immer-yjs-react'
+import { useSelection } from './immer-yjs-react'
 
 /**
  * Shared

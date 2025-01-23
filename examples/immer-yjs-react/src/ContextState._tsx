@@ -1,6 +1,6 @@
 import { bind } from 'immer-yjs'
 import * as Y from 'yjs'
-import { createSelector, useSelector, useBinder } from './index.ts'
+import { createSelector, useSelector, useBinder } from './immer-yjs-react'
 import { useContext, createContext } from 'react'
 
 /**

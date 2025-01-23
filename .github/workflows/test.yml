@@ -32,4 +32,4 @@ jobs:
               run: yarn build
             - name: Test Build Output
               if: always()
-              run: yarn workspace test-app test
+              run: yarn workspace immer-yjs-react-example test
