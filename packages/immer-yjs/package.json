@@ -25,7 +25,8 @@
         "build": "tsc && vite build",
         "test": "NODE_NO_WARNINGS=1 vitest",
         "coverage": "vitest run --coverage",
-        "release": "standard-version"
+        "release": "standard-version",
+        "check:types": "tsc --noEmit"
     },
     "peerDependencies": {
         "immer": "^9.0.12",
