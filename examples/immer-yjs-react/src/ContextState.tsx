@@ -1,8 +1,9 @@
 import { bind, Binder } from 'immer-yjs'
 import * as Y from 'yjs'
 import { useSelection } from './immer-yjs-react'
-import { createContext, useContext } from 'react'
-import { AppState } from './AppState'
+import { createContext, FunctionComponent, memo, useContext } from 'react'
+import { AppState, isAppState, parseAppState } from './AppState'
+import { Stack } from './Stack'
 
 /**
  * Example with context
@@ -10,42 +11,78 @@ import { AppState } from './AppState'
 
 const getMap = (doc: Y.Doc, key: string) => doc.getMap(key)
 
-const BinderContext = createContext<Binder<AppState>>(bind(getMap(new Y.Doc(), 'state')))
+const BinderContext = createContext<Binder<Y.Snapshot>>(bind(getMap(new Y.Doc(), 'state')))
 
 export const ContextState = () => {
     const binder = useContext(BinderContext)
-    const resetState = () => {
-        binder.update(() => ({
-            tag: 'initialized',
-            state: 'Hello, this state is contextual!',
-        }))
-    }
+    const isInitialized = useSelection(binder, (state) => isAppState((state)))
+
     return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 10,
-            }}
-        >
-            <button onClick={resetState}>Initialize/Reset</button>
-            <State />
+        <Stack>
+            {isInitialized ? <InitializedView /> : <UninitializedView />}
             <JsonState />
-        </div>
+        </Stack>
     )
 }
 
-const State = () => {
+const UninitializedView: FunctionComponent = memo(() => {
     const binder = useContext(BinderContext)
-    const state = useSelection(binder, (state) => state)
 
-    switch (state.tag) {
-        case 'initialized':
-            return <div>{state.state}</div>
-        default:
-            return <div>Unexpected state: {JSON.stringify(state)}</div>
+    const handleInitialize = () =>
+        binder.update(() => ({
+            count: 0,
+            text: '',
+        }) satisfies AppState)
+
+    return <button onClick={handleInitialize}>Initialize</button>
+})
+
+const InitializedView: FunctionComponent = memo(() => {
+    return (
+        <Stack gap={5}>
+            <CounterView />
+            <TextView />
+        </Stack>
+    )
+})
+
+const CounterView: FunctionComponent = memo(() => {
+    const binder = useContext(BinderContext)
+    const count = useSelection(binder, (state) => parseAppState(state).value.count)
+    const increment = () => {
+        binder.update((state) => {
+            if (!isAppState(state)) {
+                // If for—whatever reason—the state does not conform to the expected schema, we cannot update
+                return
+            }
+            state.count++
+        })
     }
-}
+    return (
+        <Stack
+            flexDirection="row"
+            gap={10}
+        >
+            <button onClick={increment}>Increment</button>
+            <code>{count}</code>
+        </Stack>
+    )
+})
+
+const TextView: FunctionComponent = memo(() => {
+    const binder = useContext(BinderContext)
+    const text = useSelection(binder, (state) => parseAppState(state).value.text)
+    const updateText = (text: string) => {
+        binder.update((state) => {
+            if (!isAppState(state)) {
+                // If for—whatever reason—the state does not conform to the expected schema, we cannot update
+                return
+            }
+            state.text = text
+        })
+    }
+    return <input type="text" value={text} onChange={(e) => updateText(e.target.value)} />
+})
 
 export const JsonState = () => {
     const binder = useContext(BinderContext)
@@ -57,6 +94,7 @@ export const JsonState = () => {
                 border: '1px solid grey',
                 borderRadius: 5,
                 padding: 10,
+                textAlign: 'left',
             }}
         >
             <code>{JSON.stringify(state, null, 2)}</code>

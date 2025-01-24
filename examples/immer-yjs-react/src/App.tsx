@@ -1,21 +1,20 @@
-import { GlobalState } from './GlobalState'
 import { ContextState } from './ContextState'
+import { useScan } from 'react-scan'
+import { Stack } from './Stack'
+import './App.css'
 
 export const App = () => {
+    useScan()
+
     return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 10,
-            }}
-        >
-            <h1>Examples</h1>
-            <h2>Global state</h2>
-            <GlobalState />
-            <hr />
-            <h2>State from context</h2>
-            <ContextState />
-        </div>
+        <Stack>
+            <h2>immer-yjs React Example</h2>
+            <Stack flexDirection="row" gap={10}>
+                <Stack gap={5}>
+                    <h3>State from context</h3>
+                    <ContextState />
+                </Stack>
+            </Stack>
+        </Stack>
     )
 }

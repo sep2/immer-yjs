@@ -12,9 +12,11 @@
     "dependencies": {
         "immer": "^10.1.1",
         "immer-yjs": "workspace:*",
+        "pure-parse": "^0.0.0-beta.7",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "yjs": "^13.6.23"
+        "react-scan": "^0.1.0",
+        "yjs": "^13.5.35"
     },
     "devDependencies": {
         "@eslint/js": "^9.17.0",
