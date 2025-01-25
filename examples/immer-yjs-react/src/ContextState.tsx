@@ -3,7 +3,6 @@ import * as Y from 'yjs'
 import { useSelection } from './immer-yjs-react'
 import { createContext, FunctionComponent, memo, useContext } from 'react'
 import { AppState, isAppState, parseAppState } from './AppState'
-import { Stack } from './Stack'
 
 /**
  * Example with context
@@ -18,10 +17,10 @@ export const ContextState = () => {
     const isInitialized = useSelection(binder, (state) => isAppState(state))
 
     return (
-        <Stack>
+        <div className="stack">
             {isInitialized ? <InitializedView /> : <UninitializedView />}
             <JsonState />
-        </Stack>
+        </div>
     )
 }
 
@@ -42,10 +41,10 @@ const UninitializedView: FunctionComponent = memo(() => {
 
 const InitializedView: FunctionComponent = memo(() => {
     return (
-        <Stack gap={5}>
+        <div className="stack">
             <CounterView />
             <TextView />
-        </Stack>
+        </div>
     )
 })
 
@@ -62,10 +61,10 @@ const CounterView: FunctionComponent = memo(() => {
         })
     }
     return (
-        <Stack flexDirection="row" gap={10}>
+        <div>
             <button onClick={increment}>Increment</button>
             <code>{count}</code>
-        </Stack>
+        </div>
     )
 })
 
