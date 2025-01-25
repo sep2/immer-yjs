@@ -15,7 +15,7 @@ const BinderContext = createContext<Binder<Snapshot>>(bind(getMap(new Y.Doc(), '
 
 export const ContextState = () => {
     const binder = useContext(BinderContext)
-    const isInitialized = useSelection(binder, (state) => isAppState((state)))
+    const isInitialized = useSelection(binder, (state) => isAppState(state))
 
     return (
         <Stack>
@@ -29,10 +29,13 @@ const UninitializedView: FunctionComponent = memo(() => {
     const binder = useContext(BinderContext)
 
     const handleInitialize = () =>
-        binder.update(() => ({
-            count: 0,
-            text: '',
-        }) satisfies AppState)
+        binder.update(
+            () =>
+                ({
+                    count: 0,
+                    text: '',
+                }) satisfies AppState
+        )
 
     return <button onClick={handleInitialize}>Initialize</button>
 })
@@ -59,10 +62,7 @@ const CounterView: FunctionComponent = memo(() => {
         })
     }
     return (
-        <Stack
-            flexDirection="row"
-            gap={10}
-        >
+        <Stack flexDirection="row" gap={10}>
             <button onClick={increment}>Increment</button>
             <code>{count}</code>
         </Stack>
