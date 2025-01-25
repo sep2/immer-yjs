@@ -25,7 +25,8 @@
         "build": "tsc && vite build",
         "test": "NODE_NO_WARNINGS=1 vitest",
         "coverage": "vitest run --coverage",
-        "release": "standard-version",
+        "copy-readme": "cp ../../README.md README.md",
+        "release": "yarn copy-readme && standard-version",
         "check:types": "tsc --noEmit"
     },
     "peerDependencies": {
