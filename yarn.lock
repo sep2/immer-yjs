@@ -4384,10 +4384,10 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-scan: "npm:^0.1.0"
-    typescript: "npm:~5.6.2"
+    typescript: "npm:^5.7.3"
     typescript-eslint: "npm:^8.18.2"
     vite: "npm:^6.0.5"
-    yjs: "npm:^13.5.35"
+    yjs: "npm:^13.6.23"
   languageName: unknown
   linkType: soft
 
@@ -4857,6 +4857,19 @@ __metadata:
   dependencies:
     isomorphic.js: "npm:^0.2.4"
   checksum: 10/0c63cb4bdce786cbab3f63aeed6be0ec5c35f5cfba7f71f0f3cefc192a51fabbf5b3deda2b7344fb1dcc7caede1cc75e30d14fbfd5768e3c8a4a64b615bde080
+  languageName: node
+  linkType: hard
+
+"lib0@npm:^0.2.99":
+  version: 0.2.99
+  resolution: "lib0@npm:0.2.99"
+  dependencies:
+    isomorphic.js: "npm:^0.2.4"
+  bin:
+    0ecdsa-generate-keypair: bin/0ecdsa-generate-keypair.js
+    0gentesthtml: bin/gentesthtml.js
+    0serve: bin/0serve.js
+  checksum: 10/825f248d31fc85241d322365d838aa4902ee5d97e12b8a14ac1234d0ec1c3263fa217057a2d167ec734f3037b89fd6d514a29b4a768cdf677e57d2a2692a5827
   languageName: node
   linkType: hard
 
@@ -6890,13 +6903,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:~5.6.2":
-  version: 5.6.3
-  resolution: "typescript@npm:5.6.3"
+"typescript@npm:^5.7.3":
+  version: 5.7.3
+  resolution: "typescript@npm:5.7.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10/c328e418e124b500908781d9f7b9b93cf08b66bf5936d94332b463822eea2f4e62973bfb3b8a745fdc038785cb66cf59d1092bac3ec2ac6a3e5854687f7833f1
+  checksum: 10/6a7e556de91db3d34dc51cd2600e8e91f4c312acd8e52792f243c7818dfadb27bae677175fad6947f9c81efb6c57eb6b2d0c736f196a6ee2f1f7d57b74fc92fa
   languageName: node
   linkType: hard
 
@@ -6930,13 +6943,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A~5.6.2#optional!builtin<compat/typescript>":
-  version: 5.6.3
-  resolution: "typescript@patch:typescript@npm%3A5.6.3#optional!builtin<compat/typescript>::version=5.6.3&hash=8c6c40"
+"typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>":
+  version: 5.7.3
+  resolution: "typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>::version=5.7.3&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10/00504c01ee42d470c23495426af07512e25e6546bce7e24572e72a9ca2e6b2e9bea63de4286c3cfea644874da1467dcfca23f4f98f7caf20f8b03c0213bb6837
+  checksum: 10/dc58d777eb4c01973f7fbf1fd808aad49a0efdf545528dab9b07d94fdcb65b8751742804c3057e9619a4627f2d9cc85547fdd49d9f4326992ad0181b49e61d81
   languageName: node
   linkType: hard
 
@@ -7379,6 +7392,15 @@ __metadata:
   dependencies:
     lib0: "npm:^0.2.49"
   checksum: 10/2ad911591c1eae4dba7600b73f0fd3d1ad7e34aa5069e538da0358763e559dfc72cea093344a113593be71778749dd33a4ad9f2821e232f3f9afa671252e3bdf
+  languageName: node
+  linkType: hard
+
+"yjs@npm:^13.6.23":
+  version: 13.6.23
+  resolution: "yjs@npm:13.6.23"
+  dependencies:
+    lib0: "npm:^0.2.99"
+  checksum: 10/cf5b9bcb9b3d55d28dc707c8e86a2773939ea5dca93006f55a6d9709a3023214c358ee50495451225fac77eef7726e132d6cb695bf44b69f9c022de4a23d6856
   languageName: node
   linkType: hard
 

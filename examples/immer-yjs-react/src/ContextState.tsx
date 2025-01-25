@@ -1,4 +1,4 @@
-import { bind, Binder } from 'immer-yjs'
+import { bind, Binder, Snapshot } from 'immer-yjs'
 import * as Y from 'yjs'
 import { useSelection } from './immer-yjs-react'
 import { createContext, FunctionComponent, memo, useContext } from 'react'
@@ -11,7 +11,7 @@ import { Stack } from './Stack'
 
 const getMap = (doc: Y.Doc, key: string) => doc.getMap(key)
 
-const BinderContext = createContext<Binder<Y.Snapshot>>(bind(getMap(new Y.Doc(), 'state')))
+const BinderContext = createContext<Binder<Snapshot>>(bind(getMap(new Y.Doc(), 'state')))
 
 export const ContextState = () => {
     const binder = useContext(BinderContext)
