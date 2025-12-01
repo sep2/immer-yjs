@@ -3,6 +3,7 @@ import * as Y from 'yjs'
 import { useSelection } from './immer-yjs-react'
 import { createContext, FunctionComponent, memo, useContext } from 'react'
 import { AppState, isAppState, parseAppState } from './AppState'
+import { JsonView } from './JsonView'
 
 /**
  * Example with context
@@ -10,10 +11,28 @@ import { AppState, isAppState, parseAppState } from './AppState'
 
 const getMap = (doc: Y.Doc, key: string) => doc.getMap(key)
 
-const BinderContext = createContext<Binder<Snapshot>>(bind(getMap(new Y.Doc(), 'state')))
+export type BinderContext =
+    | {
+          tag: 'initialized'
+          binder: Binder<Snapshot>
+      }
+    | {
+          tag: 'loading'
+      }
+    | {
+          tag: 'failure'
+      }
+    | {
+          tag: 'contextMissing'
+      }
 
-export const ContextState = () => {
-    const binder = useContext(BinderContext)
+const BinderContext = createContext<BinderContext>({
+    tag: 'initialized',
+    binder: bind(getMap(new Y.Doc(), 'state')),
+})
+
+export const DemoApp = () => {
+    const { binder } = useContext(BinderContext)
     const isInitialized = useSelection(binder, (state) => isAppState(state))
 
     return (
@@ -25,7 +44,7 @@ export const ContextState = () => {
 }
 
 const UninitializedView: FunctionComponent = memo(() => {
-    const binder = useContext(BinderContext)
+    const { binder } = useContext(BinderContext)
 
     const handleInitialize = () =>
         binder.update(
@@ -49,7 +68,7 @@ const InitializedView: FunctionComponent = memo(() => {
 })
 
 const CounterView: FunctionComponent = memo(() => {
-    const binder = useContext(BinderContext)
+    const { binder } = useContext(BinderContext)
     const count = useSelection(binder, (state) => parseAppState(state).value.count)
     const increment = () => {
         binder.update((state) => {
@@ -69,7 +88,7 @@ const CounterView: FunctionComponent = memo(() => {
 })
 
 const TextView: FunctionComponent = memo(() => {
-    const binder = useContext(BinderContext)
+    const { binder } = useContext(BinderContext)
     const text = useSelection(binder, (state) => parseAppState(state).value.text)
     const updateText = (text: string) => {
         binder.update((state) => {
@@ -84,19 +103,8 @@ const TextView: FunctionComponent = memo(() => {
 })
 
 export const JsonState = () => {
-    const binder = useContext(BinderContext)
+    const { binder } = useContext(BinderContext)
     const state = useSelection(binder, (state) => state)
 
-    return (
-        <pre
-            style={{
-                border: '1px solid grey',
-                borderRadius: 5,
-                padding: 10,
-                textAlign: 'left',
-            }}
-        >
-            <code>{JSON.stringify(state, null, 2)}</code>
-        </pre>
-    )
+    return <JsonView value={state} />
 }
