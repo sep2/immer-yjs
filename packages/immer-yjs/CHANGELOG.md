@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/sep2/immer-yjs/compare/v2.0.0...v1.2.1) (2025-12-02)
+
 ## 2.0.0 (2025-12-02)
 
 
