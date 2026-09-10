@@ -140,3 +140,7 @@ Data will sync between multiple browser tabs automatically.
 # Similar projects
 
 [valtio-yjs](https://github.com/dai-shi/valtio-yjs)
+
+# Example App
+
+https://github.com/sep2/immer-yjs/tree/main/apps/immer-yjs-react
