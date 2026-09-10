@@ -5,7 +5,6 @@ on:
     workflow_dispatch:
 
 permissions:
-    id-token: write
     contents: read
 
 jobs:
@@ -26,14 +25,14 @@ jobs:
                   node-version: 22
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
-            - name: Update npm (OIDC trusted publishing support)
-              run: npm install -g npm@latest
             - name: Install
               run: yarn install --immutable
             - name: Build
               run: yarn build
             - name: Copy readme into package
               run: yarn workspace immer-yjs copy-readme
-            - name: Publish to npm (OIDC, with provenance)
-              run: npm publish --provenance --access public
+            - name: Publish to npm
+              run: npm publish --access public
               working-directory: packages/immer-yjs
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

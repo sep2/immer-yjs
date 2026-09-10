@@ -28,6 +28,6 @@ jobs:
         needs: release-please
         if: ${{ needs.release-please.outputs.release_created == 'true' }}
         permissions:
-            id-token: write
             contents: read
+        secrets: inherit
         uses: ./.github/workflows/publish.yml
