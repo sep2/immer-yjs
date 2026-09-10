@@ -30,7 +30,7 @@ jobs:
                   registry-url: 'https://registry.npmjs.org'
             # `npm stage publish` requires npm >= 11.15.0, but Node 22 ships npm 10.
             - name: Update npm (staged publishing support)
-              run: npm install -g npm@^11.15.0
+              run: npm install -g npm@11.15.0
             - name: Install
               run: yarn install --immutable
             - name: Build
