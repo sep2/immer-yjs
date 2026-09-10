@@ -1,5 +1,7 @@
 // Copied from https://opensource.adobe.com/Spry/samples/data_region/JSONDataSetSample.html
 
+import { JSONValue } from './types'
+
 export const id1 = '0001'
 export const id2 = '0002'
 export const id3 = '0003'
@@ -72,8 +74,8 @@ const sampleObject = {
     [data3.id]: data3,
 }
 
-function deepClone(x: any) {
-    return JSON.parse(JSON.stringify(x))
+function deepClone<T extends JSONValue>(x: T): T {
+    return JSON.parse(JSON.stringify(x)) as T
 }
 
 export type SampleArrayType = typeof sampleArray

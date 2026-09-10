@@ -35,14 +35,16 @@ test('bind usage demo', () => {
     expect(snapshot1).toStrictEqual(map.toJSON())
 
     // get the reference to be compared after changes are made
-    const yd1 = map.get(id1) as any
+    const yd1 = map.get(id1) as Y.Map<unknown>
+    const batters = yd1.get('batters') as Y.Map<unknown>
+    const batter = batters.get('batter') as Y.Array<unknown>
 
     // nested objects / arrays are properly converted to Y.Maps / Y.Arrays
     expect(yd1).toBeInstanceOf(Y.Map)
-    expect(yd1.get('batters')).toBeInstanceOf(Y.Map)
+    expect(batters).toBeInstanceOf(Y.Map)
     expect(yd1.get('topping')).toBeInstanceOf(Y.Array)
-    expect(yd1.get('batters').get('batter')).toBeInstanceOf(Y.Array)
-    expect(yd1.get('batters').get('batter').get(0).get('id')).toBeTypeOf('string')
+    expect(batter).toBeInstanceOf(Y.Array)
+    expect((batter.get(0) as Y.Map<unknown>).get('id')).toBeTypeOf('string')
 
     // update the state with immer
     binder.update((state) => {
@@ -83,15 +85,13 @@ test('bind usage demo', () => {
     // but yjs data type should not change reference (they are mutated in-place whenever possible)
     expect(map).toBe(doc.getMap(topLevelMap))
     expect(map.get(id1)).toBe(yd1)
-    expect((map.get(id1) as any).get('topping')).toBe(yd1.get('topping'))
+    expect((map.get(id1) as Y.Map<unknown>).get('topping')).toBe(yd1.get('topping'))
 
     // save the length for later comparison
     const expectLength = binder.get()[id1].batters.batter.length
 
     // change from y.js
-    yd1.get('batters')
-        .get('batter')
-        .push([{ id: '1005', type: 'test' }])
+    batter.push([{ id: '1005', type: 'test' }])
 
     // change reflected in snapshot
     expect(binder.get()[id1].batters.batter.at(-1)).toStrictEqual({ id: '1005', type: 'test' })
@@ -114,7 +114,7 @@ test('boolean in array', () => {
 
     const map = doc.getMap('data')
 
-    const binder = bind<any>(map)
+    const binder = bind<{ k1?: boolean; k2?: boolean; k3?: boolean[] }>(map)
 
     binder.update((state) => {
         state.k1 = true

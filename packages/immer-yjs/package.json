@@ -2,18 +2,18 @@
     "name": "immer-yjs",
     "license": "MIT",
     "description": "Combine immer & y.js",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "Author": "LCZ",
     "repository": {
         "type": "git",
         "url": "https://github.com/sep2/immer-yjs.git"
     },
     "main": "./dist/immer-yjs.umd.js",
-    "module": "./dist/immer-yjs.es.js",
-    "types": "./dist/index.d.js",
+    "module": "./dist/immer-yjs.mjs",
+    "types": "./dist/index.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/immer-yjs.es.js",
+            "import": "./dist/immer-yjs.mjs",
             "require": "./dist/immer-yjs.umd.js",
             "types": "./dist/index.d.ts"
         }
@@ -25,21 +25,26 @@
         "build": "tsc && vite build",
         "test": "NODE_NO_WARNINGS=1 vitest",
         "coverage": "vitest run --coverage",
-        "copy-readme": "cp ../../README.md README.md",
+        "copy-readme": "cp ../../readme.md readme.md",
         "release": "yarn copy-readme && standard-version",
-        "check:types": "tsc --noEmit"
+        "check:types": "tsc --noEmit",
+        "lint": "eslint ."
     },
     "peerDependencies": {
-        "immer": "^10.1.1",
+        "immer": "^11.1.18",
         "yjs": "^13.5.35"
     },
     "devDependencies": {
-        "immer": "^10.1.1",
-        "standard-version": "^9.3.2",
-        "typescript": "^4.6.3",
-        "vite": "^2.9.6",
-        "vite-plugin-dts": "^3.9.1",
-        "vitest": "^0.10.0",
+        "@eslint/js": "^10.0.1",
+        "eslint": "^10.10.0",
+        "globals": "^17.12.0",
+        "immer": "^11.1.18",
+        "standard-version": "^9.5.0",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.70.0",
+        "vite": "^8.2.2",
+        "vite-plugin-dts": "^5.1.0",
+        "vitest": "^5.0.0",
         "yjs": "^13.5.35"
     },
     "keywords": [

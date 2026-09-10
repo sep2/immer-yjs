@@ -41,11 +41,11 @@ export function applyJsonObject(dest: Y.Map<unknown>, source: JSONObject) {
     })
 }
 
-export function toPlainValue(v: Y.Map<any> | Y.Array<any> | JSONValue) {
+export function toPlainValue(v: Y.Map<unknown> | Y.Array<unknown> | JSONValue) {
     if (v instanceof Y.Map || v instanceof Y.Array) {
         return v.toJSON() as JSONObject | JSONArray
     } else {
-        return v
+        return v as JSONValue
     }
 }
 

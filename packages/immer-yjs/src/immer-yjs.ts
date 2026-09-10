@@ -8,15 +8,15 @@ enablePatches()
 
 export type Snapshot = JSONObject | JSONArray
 
-function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent<any>) {
+function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent<Y.AbstractType<unknown>>) {
     if (event instanceof Y.YMapEvent && isJSONObject(base)) {
-        const source = event.target as Y.Map<any>
+        const source = event.target as Y.Map<Y.Map<unknown> | Y.Array<unknown> | JSONValue>
 
         event.changes.keys.forEach((change, key) => {
             switch (change.action) {
                 case 'add':
                 case 'update':
-                    base[key] = toPlainValue(source.get(key))
+                    base[key] = toPlainValue(source.get(key)!)
                     break
                 case 'delete':
                     delete base[key]
@@ -24,7 +24,7 @@ function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent<any>) {
             }
         })
     } else if (event instanceof Y.YArrayEvent && isJSONArray(base)) {
-        const arr = base as unknown as any[]
+        const arr = base as unknown as unknown[]
 
         let retain = 0
         event.changes.delta.forEach((change) => {
@@ -46,13 +46,15 @@ function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent<any>) {
     }
 }
 
-function applyYEvents<S extends Snapshot>(snapshot: S, events: Y.YEvent<any>[]) {
+function applyYEvents<S extends Snapshot>(snapshot: S, events: Y.YEvent<Y.AbstractType<unknown>>[]) {
     return produce(snapshot, (target) => {
         for (const event of events) {
-            const base = event.path.reduce((obj, step) => {
-                // @ts-ignore
-                return obj[step]
-            }, target)
+            const base = event.path.reduce(
+                (obj, step) =>
+                    // @ts-expect-error -- TODO runtime check
+                    obj[step],
+                target
+            )
 
             applyYEvent(base, event)
         }
@@ -63,7 +65,7 @@ const PATCH_REPLACE = 'replace'
 const PATCH_ADD = 'add'
 const PATCH_REMOVE = 'remove'
 
-function defaultApplyPatch(target: Y.Map<any> | Y.Array<any>, patch: Patch) {
+function defaultApplyPatch(target: Y.Map<unknown> | Y.Array<unknown>, patch: Patch) {
     const { path, op, value } = patch
 
     if (!path.length) {
@@ -86,10 +88,10 @@ function defaultApplyPatch(target: Y.Map<any> | Y.Array<any>, patch: Patch) {
         return
     }
 
-    let base = target
+    let base: Y.Map<unknown> | Y.Array<unknown> = target
     for (let i = 0; i < path.length - 1; i++) {
         const step = path[i]
-        base = base.get(step as never)
+        base = base.get(step as never) as Y.Map<unknown> | Y.Array<unknown>
     }
 
     const property = path[path.length - 1]
@@ -130,7 +132,7 @@ function defaultApplyPatch(target: Y.Map<any> | Y.Array<any>, patch: Patch) {
 export type UpdateFn<S extends Snapshot> = (draft: S) => void
 
 function applyUpdate<S extends Snapshot>(
-    source: Y.Map<any> | Y.Array<any>,
+    source: Y.Map<unknown> | Y.Array<unknown>,
     snapshot: S,
     fn: UpdateFn<S>,
     applyPatch: typeof defaultApplyPatch
@@ -169,6 +171,7 @@ export type Binder<S extends Snapshot> = {
     subscribe: (fn: ListenerFn<S>) => UnsubscribeFn
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type Options<S extends Snapshot> = {
     /**
      * Customize immer patch application.
@@ -177,7 +180,7 @@ export type Options<S extends Snapshot> = {
      * @param patch The patch that should be applied, please refer to 'immer' patch documentation.
      * @param applyPatch the default behavior to apply patch, call this to handle the normal case.
      */
-    applyPatch?: (target: Y.Map<any> | Y.Array<any>, patch: Patch, applyPatch: typeof defaultApplyPatch) => void
+    applyPatch?: (target: Y.Map<unknown> | Y.Array<unknown>, patch: Patch, applyPatch: typeof defaultApplyPatch) => void
 }
 
 /**
@@ -185,7 +188,7 @@ export type Options<S extends Snapshot> = {
  * @param source The y.js data type to bind.
  * @param options Change default behavior, can be omitted.
  */
-export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, options?: Options<S>): Binder<S> {
+export function bind<S extends Snapshot>(source: Y.Map<unknown> | Y.Array<unknown>, options?: Options<S>): Binder<S> {
     let snapshot = source.toJSON() as S
 
     const get = () => snapshot
@@ -197,7 +200,7 @@ export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, opti
         return () => void subscription.delete(fn)
     }
 
-    const observer = (events: Y.YEvent<any>[]) => {
+    const observer = (events: Y.YEvent<Y.AbstractType<unknown>>[]) => {
         snapshot = applyYEvents(get(), events)
         subscription.forEach((fn) => fn(get()))
     }
@@ -208,7 +211,8 @@ export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, opti
     const applyPatchInOption = options ? options.applyPatch : undefined
 
     const applyPatch = applyPatchInOption
-        ? (target: Y.Map<any> | Y.Array<any>, patch: Patch) => applyPatchInOption(target, patch, defaultApplyPatch)
+        ? (target: Y.Map<unknown> | Y.Array<unknown>, patch: Patch) =>
+              applyPatchInOption(target, patch, defaultApplyPatch)
         : defaultApplyPatch
 
     const update = (fn: UpdateFn<S>) => {
