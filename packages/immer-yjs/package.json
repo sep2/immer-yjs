@@ -9,11 +9,11 @@
         "url": "https://github.com/sep2/immer-yjs.git"
     },
     "main": "./dist/immer-yjs.umd.js",
-    "module": "./dist/immer-yjs.es.js",
-    "types": "./dist/index.d.js",
+    "module": "./dist/immer-yjs.mjs",
+    "types": "./dist/index.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/immer-yjs.es.js",
+            "import": "./dist/immer-yjs.mjs",
             "require": "./dist/immer-yjs.umd.js",
             "types": "./dist/index.d.ts"
         }

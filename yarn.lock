@@ -2504,23 +2504,23 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "immer-yjs@workspace:packages/immer-yjs"
   dependencies:
-    immer: "npm:^11.1.18"
+    immer: "npm:^10.1.1"
     standard-version: "npm:^9.5.0"
     typescript: "npm:^5.9.3"
     vite: "npm:^8.2.2"
     vite-plugin-dts: "npm:^5.1.0"
     vitest: "npm:^5.0.0"
-    yjs: "npm:^13.6.32"
+    yjs: "npm:^13.5.35"
   peerDependencies:
-    immer: ^11.1.18
-    yjs: ^13.6.32
+    immer: ^10.1.1
+    yjs: ^13.5.35
   languageName: unknown
   linkType: soft
 
-"immer@npm:^11.1.18":
-  version: 11.1.18
-  resolution: "immer@npm:11.1.18"
-  checksum: 10/5693c081651aac9ed27dd004e825cfae6c1d0ff6c0e3e1ef15a9938a489e6099893c2e98e270cc30a7633a6cc84f4750a8d37ce73e93aefb104e8a26999e70de
+"immer@npm:^10.1.1":
+  version: 10.2.0
+  resolution: "immer@npm:10.2.0"
+  checksum: 10/d73e218c8f8ffbb39f9290dfafa478b94af73403dcf26b5672eef35233bb30f09ffe231f8a78a6c9cb442968510edd89e851776ec90a5ddfa82cee6db6b35137
   languageName: node
   linkType: hard
 
@@ -5152,7 +5152,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs@npm:^13.6.32":
+"yjs@npm:^13.5.35":
   version: 13.6.32
   resolution: "yjs@npm:13.6.32"
   dependencies:
