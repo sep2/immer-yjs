@@ -1,0 +1,26 @@
+{
+    "include": ["src"],
+    "exclude": ["src/**/*.test.ts", "src/sample-data.ts"],
+    "compilerOptions": {
+        /* The published declarations are bundled by vite-plugin-dts; this
+           project only typechecks, so its emit goes to a scratch directory. */
+        "composite": true,
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.lib.tsbuildinfo",
+        "emitDeclarationOnly": true,
+        "outDir": "./node_modules/.tmp/lib",
+        "rootDir": "./src",
+        "target": "ESNext",
+        "useDefineForClassFields": true,
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "lib": ["ESNext", "DOM"],
+        "strict": true,
+        "sourceMap": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "skipLibCheck": true,
+        "noImplicitReturns": true
+    }
+}

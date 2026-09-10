@@ -1,31 +1,32 @@
-import * as path from 'path'
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 
 export default defineConfig({
     build: {
         lib: {
-            entry: path.resolve(__dirname, 'src/index.ts'),
-            name: 'immer-yjs',
-            formats: ['es', 'umd'],
+            entry: fileURLToPath(new URL('src/index.ts', import.meta.url)),
+            formats: ['es'],
         },
         rollupOptions: {
             external: ['yjs', 'immer'],
-            output: {
-                globals: {
-                    yjs: 'yjs',
-                    immer: 'immer',
-                },
-                // Since we publish our ./src folder, there's no point
-                // in bloating sourcemaps with another copy of it.
-                sourcemapExcludeSources: true,
-            },
         },
-        sourcemap: true,
+        // We only publish ./dist, so sourcemaps would point at sources that
+        // aren't there. Consumers who want to step through it can use ./src
+        // from the repository.
+        sourcemap: false,
         // Reduce bloat from legacy polyfills.
         target: 'esnext',
         // Leave minification up to applications.
         minify: false,
     },
-    plugins: [dts()],
+    plugins: [
+        dts({
+            tsconfigPath: './tsconfig.lib.json',
+            // Bundle the whole public API into a single declaration file. Keeps
+            // relative imports out of the published types, which an ESM package
+            // would otherwise have to spell with explicit file extensions.
+            rollupTypes: true,
+        }),
+    ],
 })

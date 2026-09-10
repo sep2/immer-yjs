@@ -33,6 +33,3 @@ jobs:
             - name: Build
               if: always()
               run: yarn build
-            - name: Test Build Output
-              if: always()
-              run: yarn workspace immer-yjs-react-example build

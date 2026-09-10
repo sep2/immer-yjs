@@ -8,26 +8,25 @@
         "type": "git",
         "url": "https://github.com/sep2/immer-yjs.git"
     },
-    "main": "./dist/immer-yjs.umd.js",
-    "module": "./dist/immer-yjs.mjs",
+    "type": "module",
+    "main": "./dist/immer-yjs.js",
     "types": "./dist/index.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/immer-yjs.mjs",
-            "require": "./dist/immer-yjs.umd.js",
-            "types": "./dist/index.d.ts"
+            "types": "./dist/index.d.ts",
+            "default": "./dist/immer-yjs.js"
         }
     },
     "files": [
         "dist"
     ],
     "scripts": {
-        "build": "tsc && vite build",
+        "build": "vite build",
         "test": "NODE_NO_WARNINGS=1 vitest",
         "coverage": "vitest run --coverage",
         "copy-readme": "cp ../../readme.md readme.md",
         "release": "yarn copy-readme && standard-version",
-        "check:types": "tsc --noEmit",
+        "check:types": "tsc -b",
         "lint": "eslint ."
     },
     "peerDependencies": {
@@ -36,6 +35,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
+        "@microsoft/api-extractor": "^7.59.1",
         "eslint": "^10.10.0",
         "globals": "^17.12.0",
         "immer": "^11.1.18",

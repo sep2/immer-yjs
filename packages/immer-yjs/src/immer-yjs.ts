@@ -171,8 +171,7 @@ export type Binder<S extends Snapshot> = {
     subscribe: (fn: ListenerFn<S>) => UnsubscribeFn
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type Options<S extends Snapshot> = {
+export type Options = {
     /**
      * Customize immer patch application.
      * Should apply patch to the target y.js data.
@@ -188,7 +187,7 @@ export type Options<S extends Snapshot> = {
  * @param source The y.js data type to bind.
  * @param options Change default behavior, can be omitted.
  */
-export function bind<S extends Snapshot>(source: Y.Map<unknown> | Y.Array<unknown>, options?: Options<S>): Binder<S> {
+export function bind<S extends Snapshot>(source: Y.Map<unknown> | Y.Array<unknown>, options?: Options): Binder<S> {
     let snapshot = source.toJSON() as S
 
     const get = () => snapshot
