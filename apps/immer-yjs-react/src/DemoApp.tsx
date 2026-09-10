@@ -96,9 +96,9 @@ const UninitializedView: FunctionComponent = memo(function UninitializedView() {
 const InitializedView: FunctionComponent = memo(function InitializedView() {
     return (
         <div className="stack">
+            <ResetView />
             <CounterView />
             <TextView />
-            <ResetView />
         </div>
     )
 })
@@ -126,8 +126,7 @@ const CounterView: FunctionComponent = memo(function CounterView() {
 
     return (
         <div className="row">
-            <button onClick={increment}>Increment</button>
-            <code className="count">{count}</code>
+            <button onClick={increment}>Increment: {count}</button>
         </div>
     )
 })
@@ -145,7 +144,9 @@ const TextView: FunctionComponent = memo(function TextView() {
             state.text = text
         })
 
-    return <input type="text" value={text} placeholder="Type to sync…" onChange={(e) => updateText(e.target.value)} />
+    return (
+        <input type="text" value={text} placeholder="Type something..." onChange={(e) => updateText(e.target.value)} />
+    )
 })
 
 const JsonState: FunctionComponent = () => {
@@ -157,7 +158,7 @@ const JsonState: FunctionComponent = () => {
 
     return (
         <div className="stack">
-            <small className="caption">The shared document, as it arrived from the provider</small>
+            <small className="caption">State:</small>
             <JsonView value={document} />
         </div>
     )

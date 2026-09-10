@@ -1,12 +1,6 @@
 import { FunctionComponent, memo } from 'react'
 import { JsonValue } from 'pure-parse'
 
-const countRender = (label: string) => {
-    const w = window as unknown as { __renders?: Record<string, number> }
-    w.__renders = w.__renders ?? {}
-    w.__renders[label] = (w.__renders[label] ?? 0) + 1
-}
-
 /**
  * Renders a JSON value as an indented tree in which every node is memoized.
  *
@@ -21,7 +15,6 @@ const countRender = (label: string) => {
 export const JsonView: FunctionComponent<{
     value: JsonValue
 }> = memo(function JsonView(props) {
-    countRender('JsonView')
     return (
         <div className="json-view">
             <JsonNode value={props.value} />
@@ -32,7 +25,6 @@ export const JsonView: FunctionComponent<{
 const JsonNode: FunctionComponent<{
     value: JsonValue
 }> = memo(function JsonNode(props) {
-    countRender('JsonNode')
     const { value } = props
 
     if (value === null || typeof value !== 'object') {
@@ -45,9 +37,9 @@ const JsonNode: FunctionComponent<{
 const JsonObjectNode: FunctionComponent<{
     value: { [key: string]: JsonValue }
 }> = memo(function JsonObjectNode(props) {
-    countRender('JsonObjectNode')
     const entries = Object.entries(props.value)
 
+    // Not required, but nicer formatting
     if (entries.length === 0) {
         return <span className="json-punctuation">{'{}'}</span>
     }
@@ -70,7 +62,6 @@ const JsonProperty: FunctionComponent<{
     value: JsonValue
     isLast: boolean
 }> = memo(function JsonProperty(props) {
-    countRender(`JsonProperty:${props.name}`)
     return (
         <div>
             <span className="json-key">"{props.name}"</span>
@@ -119,7 +110,6 @@ const JsonItem: FunctionComponent<{
 const JsonPrimitive: FunctionComponent<{
     value: null | boolean | number | string
 }> = memo(function JsonPrimitive(props) {
-    countRender('JsonPrimitive')
     const { value } = props
 
     if (typeof value === 'string') {

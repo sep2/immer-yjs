@@ -21,16 +21,25 @@ Open the printed URL in two windows to watch edits propagate between them.
 | `immer-yjs-react.ts` | The React bindings: `useImmerYjs` creates and binds the document, `useSelection` subscribes to it, `useBinder` writes to it. |
 | `DemoApp.tsx`        | Attaches a `WebrtcProvider` and renders a counter and a text field backed by the shared document.                            |
 | `AppState.ts`        | The shape of the document, plus a [`pure-parse`](https://github.com/johannes-lindgren/pure-parse) type guard for it.         |
+| `JsonView.tsx`       | Renders the document as a tree of memoized nodes, one component per value.                                                   |
 
 ## Watching re-renders
 
-`main.tsx` starts [react-scan](https://github.com/aidenybai/react-scan), which outlines each component
-as it re-renders. Because every snapshot is immutable and the selectors return primitives, a
-`memo`-wrapped component only re-renders when the value it selected actually changed: typing in the
-text field outlines `TextView` and the JSON pane, and leaves `CounterView` alone.
+`App.tsx` drives [react-scan](https://github.com/aidenybai/react-scan) through its `useScan` hook, wired
+to a "Highlight re-renders" switch that defaults to off. `main.tsx` imports the package for its side
+effect only, and keeps that import above the React import: react-scan installs the React DevTools hook
+when it loads, and can only instrument React if it runs first.
 
-`scan()` is called with no options—`trackUnnecessaryRenders` appears in react-scan's type definitions
-but is rejected by its runtime validator in 0.5.7.
+Switch it on and type in the text field. immer-yjs snapshots are immutable and structurally shared—an
+update rebuilds only the path from the root down to the value that changed—so `memo` skips every
+untouched subtree. `JsonView.tsx` leans on this by rendering one memoized component per JSON value
+rather than stringifying the document: a single keystroke re-renders the `"text"` row and leaves the
+`"count"` row untouched. Stringifying instead would rebuild every line on every keystroke.
+
+Two react-scan quirks worth knowing: `useScan` is called without `trackUnnecessaryRenders`, which
+appears in its type definitions but is rejected by its runtime validator in 0.5.7; and switching the
+scan off leaves any already-drawn outlines on screen until the next reload, since react-scan does not
+clear its overlay when paused.
 
 ## Validating the document
 
