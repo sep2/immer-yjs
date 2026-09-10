@@ -72,8 +72,8 @@ const sampleObject = {
     [data3.id]: data3,
 }
 
-function deepClone(x: unknown) {
-    return JSON.parse(JSON.stringify(x))
+function deepClone<T>(x: T): T {
+    return JSON.parse(JSON.stringify(x)) as T
 }
 
 export type SampleArrayType = typeof sampleArray
