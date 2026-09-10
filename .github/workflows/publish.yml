@@ -34,7 +34,7 @@ jobs:
             - name: Install
               run: yarn install --immutable
             - name: Build
-              run: yarn build
+              run: yarn turbo run build --filter=immer-yjs
             - name: Copy readme into package
               run: yarn workspace immer-yjs copy-readme
             - name: Stage publish to npm (awaits 2FA approval)

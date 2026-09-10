@@ -7,18 +7,21 @@
         "apps/*"
     ],
     "scripts": {
-        "build": "yarn workspace immer-yjs build",
-        "test": "yarn workspace immer-yjs test",
+        "dev": "turbo run dev",
+        "build": "turbo run build",
+        "test": "turbo run test",
+        "lint": "turbo run lint",
+        "check:types": "turbo run check:types",
+        "coverage": "turbo run coverage",
         "publish": "yarn workspace immer-yjs npm publish",
         "release": "yarn workspace immer-yjs release",
-        "lint": "yarn workspace immer-yjs lint",
         "format": "prettier . --write",
-        "check:formatting": "prettier . --check",
-        "check:types": "yarn workspace immer-yjs check:types"
+        "check:formatting": "prettier . --check"
     },
     "devDependencies": {
         "@types/node": "^17.0.21",
-        "prettier": "^3.4.2"
+        "prettier": "^3.4.2",
+        "turbo": "^2.10.12"
     },
     "packageManager": "yarn@4.18.0"
 }
