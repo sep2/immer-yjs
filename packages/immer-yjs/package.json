@@ -32,7 +32,7 @@
     },
     "peerDependencies": {
         "immer": "^11.1.18",
-        "yjs": "^13.6.32"
+        "yjs": "^13.5.35"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
@@ -45,7 +45,7 @@
         "vite": "^8.2.2",
         "vite-plugin-dts": "^5.1.0",
         "vitest": "^5.0.0",
-        "yjs": "^13.6.32"
+        "yjs": "^13.5.35"
     },
     "keywords": [
         "immer",
