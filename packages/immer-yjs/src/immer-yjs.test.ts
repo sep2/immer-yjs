@@ -35,6 +35,7 @@ test('bind usage demo', () => {
     expect(snapshot1).toStrictEqual(map.toJSON())
 
     // get the reference to be compared after changes are made
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const yd1 = map.get(id1) as any
 
     // nested objects / arrays are properly converted to Y.Maps / Y.Arrays
@@ -83,6 +84,7 @@ test('bind usage demo', () => {
     // but yjs data type should not change reference (they are mutated in-place whenever possible)
     expect(map).toBe(doc.getMap(topLevelMap))
     expect(map.get(id1)).toBe(yd1)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((map.get(id1) as any).get('topping')).toBe(yd1.get('topping'))
 
     // save the length for later comparison
@@ -114,6 +116,7 @@ test('boolean in array', () => {
 
     const map = doc.getMap('data')
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const binder = bind<any>(map)
 
     binder.update((state) => {

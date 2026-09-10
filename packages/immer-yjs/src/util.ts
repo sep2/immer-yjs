@@ -41,6 +41,7 @@ export function applyJsonObject(dest: Y.Map<unknown>, source: JSONObject) {
     })
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function toPlainValue(v: Y.Map<any> | Y.Array<any> | JSONValue) {
     if (v instanceof Y.Map || v instanceof Y.Array) {
         return v.toJSON() as JSONObject | JSONArray
