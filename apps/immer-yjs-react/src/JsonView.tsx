@@ -6,14 +6,7 @@ export const JsonView: FunctionComponent<{
 }> = (props) => {
     const str = useMemo(() => JSON.stringify(props.value, null, 2), [props.value])
     return (
-        <pre
-            style={{
-                border: '1px solid grey',
-                borderRadius: 5,
-                padding: 10,
-                textAlign: 'left',
-            }}
-        >
+        <pre className="json-view">
             <code>{str}</code>
         </pre>
     )

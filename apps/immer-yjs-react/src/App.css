@@ -1,5 +1,5 @@
 #root {
-    max-width: 1280px;
+    max-width: 52rem;
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
@@ -18,4 +18,70 @@
     gap: 10px;
 }
 
-.row-stack
+/* Let nested stacks span the text column, so the JSON view below can fill it. */
+.stack > .stack {
+    align-self: stretch;
+}
+
+.stack > p {
+    align-self: stretch;
+    margin: 0;
+    text-align: left;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.count {
+    font-size: 1.25rem;
+    min-width: 3ch;
+    text-align: left;
+}
+
+input[type='text'] {
+    min-width: 18rem;
+    padding: 0.5em 0.75em;
+    border: 1px solid rgba(127, 127, 127, 0.4);
+    border-radius: 8px;
+    background-color: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.code-block {
+    box-sizing: border-box;
+    align-self: stretch;
+    margin: 0;
+    padding: 0.85rem 1.25rem;
+    border: 1px solid rgba(127, 127, 127, 0.4);
+    border-radius: 8px;
+    background-color: rgba(127, 127, 127, 0.12);
+    text-align: left;
+    font-size: 1rem;
+    overflow-x: auto;
+}
+
+.caption {
+    align-self: flex-start;
+    opacity: 0.65;
+}
+
+.json-view {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(127, 127, 127, 0.4);
+    border-radius: 8px;
+    background-color: rgba(127, 127, 127, 0.12);
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-x: auto;
+}
