@@ -1,8 +1,7 @@
 import { bind, Binder, Snapshot } from 'immer-yjs'
 import * as Y from 'yjs'
-import { useSelection } from './immer-yjs-react'
 import { createContext, FunctionComponent, memo, useContext } from 'react'
-import { AppState, isAppState, parseAppState } from './AppState'
+import { AppState, isAppState } from './AppState'
 import { DocumentState, ImmerYjsProvider, useImmerYjs, useSelection2 } from './use-selection'
 import { WebrtcProvider } from 'y-webrtc'
 import { isBoolean, object } from 'pure-parse'
@@ -126,5 +125,5 @@ const NewCounter: FunctionComponent = () => {
 export const JsonState = () => {
     const state = useSelection2(selectData)
 
-    return <JsonView value={state} />
+    return state === undefined ? 'undefined' : <JsonView value={state} />
 }

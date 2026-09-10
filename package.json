@@ -4,7 +4,7 @@
     "license": "MIT",
     "workspaces": [
         "packages/*",
-        "examples/*"
+        "apps/*"
     ],
     "scripts": {
         "build": "yarn workspace immer-yjs build",

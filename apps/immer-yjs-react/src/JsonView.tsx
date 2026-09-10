@@ -4,7 +4,7 @@ import { JsonValue } from 'pure-parse'
 export const JsonView: FunctionComponent<{
     value: JsonValue
 }> = (props) => {
-    const str = useMemo(() => JSON.stringify(props.value, null, 2), [props.children])
+    const str = useMemo(() => JSON.stringify(props.value, null, 2), [props.value])
     return (
         <pre
             style={{
