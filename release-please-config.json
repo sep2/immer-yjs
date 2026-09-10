@@ -1,0 +1,9 @@
+{
+    "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+    "release-type": "node",
+    "include-component-in-tag": false,
+    "bootstrap-sha": "efa3b7e38f6b7b85817f71bc5876346de45b3122",
+    "packages": {
+        "packages/immer-yjs": {}
+    }
+}

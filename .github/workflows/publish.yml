@@ -1,0 +1,39 @@
+name: Publish
+
+on:
+    workflow_call:
+    workflow_dispatch:
+
+permissions:
+    id-token: write
+    contents: read
+
+jobs:
+    ci:
+        if: github.event_name == 'workflow_dispatch'
+        uses: ./.github/workflows/code-integration-checks.yml
+
+    publish-npm:
+        name: Publish NPM
+        needs: ci
+        if: always() && (needs.ci.result == 'success' || needs.ci.result == 'skipped')
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Set up node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: 'yarn'
+                  registry-url: 'https://registry.npmjs.org'
+            - name: Update npm (OIDC trusted publishing support)
+              run: npm install -g npm@latest
+            - name: Install
+              run: yarn install --immutable
+            - name: Build
+              run: yarn build
+            - name: Copy readme into package
+              run: yarn workspace immer-yjs copy-readme
+            - name: Publish to npm (OIDC, with provenance)
+              run: npm publish --provenance --access public
+              working-directory: packages/immer-yjs

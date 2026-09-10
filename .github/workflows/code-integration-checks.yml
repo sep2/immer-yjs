@@ -1,5 +1,8 @@
 name: 'Code Integration Checks'
-on: ['pull_request']
+on:
+    pull_request:
+    workflow_call:
+
 jobs:
     integration-checks:
         runs-on: ubuntu-latest
