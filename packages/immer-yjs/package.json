@@ -25,7 +25,7 @@
         "build": "tsc && vite build",
         "test": "NODE_NO_WARNINGS=1 vitest",
         "coverage": "vitest run --coverage",
-        "copy-readme": "cp ../../README.md README.md",
+        "copy-readme": "cp ../../readme.md readme.md",
         "release": "yarn copy-readme && standard-version",
         "check:types": "tsc --noEmit"
     },
