@@ -10,13 +10,13 @@ export type Snapshot = JSONObject | JSONArray
 
 function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent<Y.AbstractType<unknown>>) {
     if (event instanceof Y.YMapEvent && isJSONObject(base)) {
-        const source = event.target as Y.Map<unknown>
+        const source = event.target as Y.Map<Y.Map<unknown> | Y.Array<unknown> | JSONValue>
 
         event.changes.keys.forEach((change, key) => {
             switch (change.action) {
                 case 'add':
                 case 'update':
-                    base[key] = toPlainValue(source.get(key))
+                    base[key] = toPlainValue(source.get(key)!)
                     break
                 case 'delete':
                     delete base[key]
@@ -49,9 +49,13 @@ function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent<Y.AbstractTyp
 function applyYEvents<S extends Snapshot>(snapshot: S, events: Y.YEvent<Y.AbstractType<unknown>>[]) {
     return produce(snapshot, (target) => {
         for (const event of events) {
-            const base = event.path.reduce((obj, step) => {
-                return obj[step]
-            }, target)
+            const base = event.path.reduce(
+                (obj, step) => {
+                    return obj[step]
+                },
+                // @ts-expect-error -- walking the recursive draft by a dynamic path key is beyond the type system
+                target
+            )
 
             applyYEvent(base, event)
         }
