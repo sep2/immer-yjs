@@ -8,8 +8,10 @@ enablePatches()
 
 export type Snapshot = JSONObject | JSONArray
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent<any>) {
     if (event instanceof Y.YMapEvent && isJSONObject(base)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const source = event.target as Y.Map<any>
 
         event.changes.keys.forEach((change, key) => {
@@ -24,6 +26,7 @@ function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent<any>) {
             }
         })
     } else if (event instanceof Y.YArrayEvent && isJSONArray(base)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const arr = base as unknown as any[]
 
         let retain = 0
@@ -46,10 +49,12 @@ function applyYEvent<T extends JSONValue>(base: T, event: Y.YEvent<any>) {
     }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function applyYEvents<S extends Snapshot>(snapshot: S, events: Y.YEvent<any>[]) {
     return produce(snapshot, (target) => {
         for (const event of events) {
             const base = event.path.reduce((obj, step) => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 return obj[step]
             }, target)
@@ -63,6 +68,7 @@ const PATCH_REPLACE = 'replace'
 const PATCH_ADD = 'add'
 const PATCH_REMOVE = 'remove'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function defaultApplyPatch(target: Y.Map<any> | Y.Array<any>, patch: Patch) {
     const { path, op, value } = patch
 
@@ -130,6 +136,7 @@ function defaultApplyPatch(target: Y.Map<any> | Y.Array<any>, patch: Patch) {
 export type UpdateFn<S extends Snapshot> = (draft: S) => void
 
 function applyUpdate<S extends Snapshot>(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     source: Y.Map<any> | Y.Array<any>,
     snapshot: S,
     fn: UpdateFn<S>,
@@ -169,6 +176,7 @@ export type Binder<S extends Snapshot> = {
     subscribe: (fn: ListenerFn<S>) => UnsubscribeFn
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type Options<S extends Snapshot> = {
     /**
      * Customize immer patch application.
@@ -177,6 +185,7 @@ export type Options<S extends Snapshot> = {
      * @param patch The patch that should be applied, please refer to 'immer' patch documentation.
      * @param applyPatch the default behavior to apply patch, call this to handle the normal case.
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     applyPatch?: (target: Y.Map<any> | Y.Array<any>, patch: Patch, applyPatch: typeof defaultApplyPatch) => void
 }
 
@@ -185,6 +194,7 @@ export type Options<S extends Snapshot> = {
  * @param source The y.js data type to bind.
  * @param options Change default behavior, can be omitted.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, options?: Options<S>): Binder<S> {
     let snapshot = source.toJSON() as S
 
@@ -197,6 +207,7 @@ export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, opti
         return () => void subscription.delete(fn)
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const observer = (events: Y.YEvent<any>[]) => {
         snapshot = applyYEvents(get(), events)
         subscription.forEach((fn) => fn(get()))
@@ -208,7 +219,8 @@ export function bind<S extends Snapshot>(source: Y.Map<any> | Y.Array<any>, opti
     const applyPatchInOption = options ? options.applyPatch : undefined
 
     const applyPatch = applyPatchInOption
-        ? (target: Y.Map<any> | Y.Array<any>, patch: Patch) => applyPatchInOption(target, patch, defaultApplyPatch)
+        ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (target: Y.Map<any> | Y.Array<any>, patch: Patch) => applyPatchInOption(target, patch, defaultApplyPatch)
         : defaultApplyPatch
 
     const update = (fn: UpdateFn<S>) => {

@@ -72,6 +72,7 @@ const sampleObject = {
     [data3.id]: data3,
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function deepClone(x: any) {
     return JSON.parse(JSON.stringify(x))
 }

@@ -27,16 +27,21 @@
         "coverage": "vitest run --coverage",
         "copy-readme": "cp ../../readme.md readme.md",
         "release": "yarn copy-readme && standard-version",
-        "check:types": "tsc --noEmit"
+        "check:types": "tsc --noEmit",
+        "lint": "eslint ."
     },
     "peerDependencies": {
         "immer": "^10.1.1",
         "yjs": "^13.5.35"
     },
     "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "eslint": "^10.10.0",
+        "globals": "^17.12.0",
         "immer": "^10.1.1",
         "standard-version": "^9.5.0",
         "typescript": "^5.9.3",
+        "typescript-eslint": "^8.70.0",
         "vite": "^8.2.2",
         "vite-plugin-dts": "^5.1.0",
         "vitest": "^5.0.0",
