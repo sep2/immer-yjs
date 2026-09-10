@@ -50,10 +50,9 @@ function applyYEvents<S extends Snapshot>(snapshot: S, events: Y.YEvent<Y.Abstra
     return produce(snapshot, (target) => {
         for (const event of events) {
             const base = event.path.reduce(
-                (obj, step) => {
-                    return obj[step]
-                },
-                // @ts-expect-error -- walking the recursive draft by a dynamic path key is beyond the type system
+                (obj, step) =>
+                    // @ts-expect-error -- TODO runtime check
+                    obj[step],
                 target
             )
 
