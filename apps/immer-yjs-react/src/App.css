@@ -81,7 +81,54 @@ input[type='text'] {
     border-radius: 8px;
     background-color: rgba(127, 127, 127, 0.12);
     text-align: left;
+    /* No longer a <pre>, so the monospace font and significant whitespace
+       (spaces inside string values) have to be asked for explicitly. */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 1rem;
     line-height: 1.6;
+    white-space: pre-wrap;
     overflow-x: auto;
+}
+
+/* One indentation step per level of nesting, in place of JSON.stringify's spaces. */
+.json-indent {
+    padding-left: 2ch;
+}
+
+.json-punctuation {
+    opacity: 0.55;
+}
+
+.json-key {
+    color: #9cdcfe;
+}
+
+.json-string {
+    color: #ce9178;
+}
+
+.json-number {
+    color: #b5cea8;
+}
+
+.json-keyword {
+    color: #c586c0;
+}
+
+@media (prefers-color-scheme: light) {
+    .json-key {
+        color: #0451a5;
+    }
+
+    .json-string {
+        color: #a31515;
+    }
+
+    .json-number {
+        color: #098658;
+    }
+
+    .json-keyword {
+        color: #af00db;
+    }
 }

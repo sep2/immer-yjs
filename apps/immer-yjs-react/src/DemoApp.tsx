@@ -84,7 +84,7 @@ const DocumentView: FunctionComponent = () => {
     )
 }
 
-const UninitializedView: FunctionComponent = memo(() => {
+const UninitializedView: FunctionComponent = memo(function UninitializedView() {
     const binder = useBinder()
 
     // Returning a value from the recipe replaces the document wholesale.
@@ -93,15 +93,17 @@ const UninitializedView: FunctionComponent = memo(() => {
     return <button onClick={initialize}>Initialize</button>
 })
 
-const InitializedView: FunctionComponent = memo(() => (
-    <div className="stack">
-        <CounterView />
-        <TextView />
-        <ResetView />
-    </div>
-))
+const InitializedView: FunctionComponent = memo(function InitializedView() {
+    return (
+        <div className="stack">
+            <CounterView />
+            <TextView />
+            <ResetView />
+        </div>
+    )
+})
 
-const ResetView: FunctionComponent = memo(() => {
+const ResetView: FunctionComponent = memo(function ResetView() {
     const binder = useBinder()
 
     const reset = () => binder?.update(() => createInitialState())
@@ -109,7 +111,7 @@ const ResetView: FunctionComponent = memo(() => {
     return <button onClick={reset}>Reset</button>
 })
 
-const CounterView: FunctionComponent = memo(() => {
+const CounterView: FunctionComponent = memo(function CounterView() {
     const binder = useBinder()
     const count = useSelection(selectCount)
 
@@ -130,7 +132,7 @@ const CounterView: FunctionComponent = memo(() => {
     )
 })
 
-const TextView: FunctionComponent = memo(() => {
+const TextView: FunctionComponent = memo(function TextView() {
     const binder = useBinder()
     const text = useSelection(selectText)
 
