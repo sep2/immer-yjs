@@ -25,14 +25,17 @@ jobs:
                   node-version: 22
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
+            # `npm stage publish` requires npm >= 11.15.0, but Node 22 ships npm 10.
+            - name: Update npm (staged publishing support)
+              run: npm install -g npm@^11.15.0
             - name: Install
               run: yarn install --immutable
             - name: Build
               run: yarn build
             - name: Copy readme into package
               run: yarn workspace immer-yjs copy-readme
-            - name: Publish to npm
-              run: npm publish --access public
+            - name: Stage publish to npm (awaits 2FA approval)
+              run: npm stage publish --access public
               working-directory: packages/immer-yjs
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
