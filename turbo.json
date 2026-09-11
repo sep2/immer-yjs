@@ -13,6 +13,7 @@
             "outputs": []
         },
         "test": {
+            "dependsOn": ["^build"],
             "cache": false
         },
         "coverage": {

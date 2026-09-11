@@ -27,6 +27,9 @@ jobs:
             - name: Lint
               if: always()
               run: yarn turbo run lint
+            - name: Install Playwright browsers
+              if: always()
+              run: yarn workspace test-environments playwright install --with-deps chromium
             - name: Test
               if: always()
               run: yarn turbo run test

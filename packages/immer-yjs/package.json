@@ -22,7 +22,7 @@
     ],
     "scripts": {
         "build": "vite build && tsc -b tsconfig.lib.json --force",
-        "test": "NODE_NO_WARNINGS=1 vitest",
+        "test": "NODE_NO_WARNINGS=1 vitest run",
         "coverage": "vitest run --coverage",
         "copy-readme": "cp ../../readme.md readme.md",
         "release": "yarn copy-readme && standard-version",
@@ -37,6 +37,7 @@
         "@eslint/js": "^10.0.1",
         "eslint": "^10.10.0",
         "globals": "^17.12.0",
+        "happy-dom": "^20.14.3",
         "immer": "^11.1.18",
         "standard-version": "^9.5.0",
         "typescript": "^5.9.3",

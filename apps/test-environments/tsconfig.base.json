@@ -6,11 +6,14 @@
         "strict": true,
         "skipLibCheck": true,
 
-        /* Required so each strategy can be a referenced project of tsconfig.json.
-           `rootDir` must be explicit: `composite` otherwise defaults it to this
-           directory, which would emit to dist/node/src/ instead of dist/node/. */
+        /* Required so each strategy can be a referenced project of tsconfig.json;
+           `composite` in turn forbids disabling incremental compilation, so each
+           strategy names its own buildinfo to avoid clobbering the others. */
         "composite": true,
-        "rootDir": "./src"
+
+        /* Nothing here is executed from tsc's output -- vitest runs the suite.
+           These projects exist purely to type-check. */
+        "noEmit": true
     },
     "include": ["src"]
 }
