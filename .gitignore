@@ -47,3 +47,6 @@ lerna-debug.log*
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+# Turborepo
+.turbo/

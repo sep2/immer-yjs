@@ -20,19 +20,16 @@ jobs:
               run: yarn install --immutable
             - name: Check Code Formatting
               if: always()
-              run: yarn check:formatting
+              run: yarn formatting:check
             - name: Check Types
               if: always()
-              run: yarn check:types
+              run: yarn turbo run types:check
             - name: Lint
               if: always()
-              run: yarn lint
+              run: yarn turbo run lint
             - name: Test
               if: always()
-              run: yarn test
+              run: yarn turbo run test
             - name: Build
               if: always()
-              run: yarn build
-            - name: Test Build Output
-              if: always()
-              run: yarn workspace immer-yjs-react-example build
+              run: yarn turbo run build
