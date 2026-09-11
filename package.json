@@ -1,5 +1,5 @@
 {
-    "name": "immer-yjs-monorepo",
+    "name": "@repo/root",
     "private": true,
     "license": "MIT",
     "workspaces": [
