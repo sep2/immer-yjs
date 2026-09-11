@@ -1,4 +1,4 @@
-# test-app-imports
+# test-environments
 
 Verifies that the public API of [`immer-yjs`](../../packages/immer-yjs) can be imported, type-checked
 and executed under every module resolution strategy consumers actually use.
@@ -27,7 +27,7 @@ The package is published as ESM only, so this app is what catches a broken `expo
 From the repository root:
 
 ```sh
-yarn workspace test-app-imports test
+yarn workspace test-environments test
 ```
 
 Each step can be run on its own: `test:types` type-checks all three configs, `test:build` emits the

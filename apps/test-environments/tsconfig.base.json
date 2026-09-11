@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "lib": ["ES2020"],
+        "isolatedModules": true,
+        "strict": true,
+        "skipLibCheck": true,
+
+        /* Required so each strategy can be a referenced project of tsconfig.json.
+           `rootDir` must be explicit: `composite` otherwise defaults it to this
+           directory, which would emit to dist/node/src/ instead of dist/node/. */
+        "composite": true,
+        "rootDir": "./src"
+    },
+    "include": ["src"]
+}

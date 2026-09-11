@@ -1,5 +1,5 @@
 {
-    "name": "test-app-imports",
+    "name": "test-environments",
     "private": true,
     "version": "0.0.0",
     "type": "module",
@@ -7,7 +7,8 @@
         "test": "yarn test:types && yarn test:build && yarn test:run",
         "test:types": "tsc -p tsconfig.bundler.json && tsc -p tsconfig.nodenext.json --noEmit && tsc -p tsconfig.cjs.json",
         "test:build": "vite build && tsc -p tsconfig.nodenext.json",
-        "test:run": "node dist/node/smoke.js"
+        "test:run": "node dist/node/smoke.js",
+        "types:check": "tsc -b"
     },
     "dependencies": {
         "immer": "^11.1.18",

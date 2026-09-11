@@ -1,13 +1,10 @@
 {
+    "extends": "./tsconfig.base.json",
     "compilerOptions": {
-        "target": "ES2020",
         "module": "CommonJS",
         "moduleResolution": "node",
-        "lib": ["ES2020"],
         "esModuleInterop": true,
         "noEmit": true,
-        "strict": true,
-        "skipLibCheck": true
-    },
-    "include": ["src"]
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.cjs.tsbuildinfo"
+    }
 }

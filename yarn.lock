@@ -6484,9 +6484,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"test-app-imports@workspace:apps/test-app-imports":
+"test-environments@workspace:apps/test-environments":
   version: 0.0.0-use.local
-  resolution: "test-app-imports@workspace:apps/test-app-imports"
+  resolution: "test-environments@workspace:apps/test-environments"
   dependencies:
     "@types/node": "npm:^22.20.2"
     immer: "npm:^11.1.18"

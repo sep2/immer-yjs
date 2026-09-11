@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.bundler.tsbuildinfo"
+    }
+}

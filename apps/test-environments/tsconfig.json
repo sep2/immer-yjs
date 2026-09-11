@@ -1,0 +1,8 @@
+{
+    "files": [],
+    "references": [
+        { "path": "./tsconfig.bundler.json" },
+        { "path": "./tsconfig.nodenext.json" },
+        { "path": "./tsconfig.cjs.json" }
+    ]
+}
