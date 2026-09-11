@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "types:check": "tsc -b",
+        "types:check": "tsc -b --force",
         "test": "vitest run"
     },
     "dependencies": {
