@@ -1,0 +1,25 @@
+diff --git a/lib-commonjs/PackageJsonLookup.js b/lib-commonjs/PackageJsonLookup.js
+index 3cc93518f81d3358e814d8116c0e86a6a8ac56c1..595c6e851d20931fec4ea3caa595b4156668c692 100644
+--- a/lib-commonjs/PackageJsonLookup.js
++++ b/lib-commonjs/PackageJsonLookup.js
+@@ -140,6 +140,20 @@ class PackageJsonLookup {
+      * @returns an absolute path to a folder containing a package.json file
+      */
+     tryGetPackageFolderFor(fileOrFolderPath) {
++        // Yarn PnP stores packages inside zip archives, so walking parent
++        // directories looking for a package.json never finds one. Ask the PnP
++        // runtime for the owning package instead.
++        // https://github.com/microsoft/rushstack/issues/4156
++        if (process.versions.pnp) {
++            const { findPnpApi } = require('module');
++            const pnpApi = findPnpApi(fileOrFolderPath);
++            if (pnpApi) {
++                const locator = pnpApi.findPackageLocator(fileOrFolderPath);
++                if (locator) {
++                    return pnpApi.getPackageInformation(locator).packageLocation;
++                }
++            }
++        }
+         // Convert it to an absolute path
+         const resolvedFileOrFolderPath = path.resolve(fileOrFolderPath);
+         // Optimistically hope that the starting string is already in the cache,

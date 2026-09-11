@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.lib.json",
+    "include": ["src"],
+    "exclude": [],
+    "compilerOptions": {
+        /* Tests are only ever typechecked, never emitted. */
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tests.tsbuildinfo",
+        "emitDeclarationOnly": false,
+        "noEmit": true
+    }
+}

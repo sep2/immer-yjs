@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.cjs.tsbuildinfo"
+    }
+}

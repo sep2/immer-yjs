@@ -1,31 +1,30 @@
-import * as path from 'path'
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
-import dts from 'vite-plugin-dts'
+import dts from 'unplugin-dts/vite'
 
 export default defineConfig({
+    plugins: [
+        dts({
+            tsconfigPath: './tsconfig.lib.json',
+            // Merge the public API into a single declaration file, so the published
+            // types carry no relative specifiers. An ESM package would otherwise have
+            // to spell those with explicit file extensions.
+            // Needs the @rushstack/node-core-library patch to work under
+            // Yarn PnP -- see .yarn/patches.
+            bundleTypes: true,
+        }),
+    ],
     build: {
         lib: {
-            entry: path.resolve(__dirname, 'src/index.ts'),
-            name: 'immer-yjs',
-            formats: ['es', 'umd'],
+            entry: fileURLToPath(new URL('src/index.ts', import.meta.url)),
+            formats: ['es'],
         },
         rollupOptions: {
             external: ['yjs', 'immer'],
-            output: {
-                globals: {
-                    yjs: 'yjs',
-                    immer: 'immer',
-                },
-                // Since we publish our ./src folder, there's no point
-                // in bloating sourcemaps with another copy of it.
-                sourcemapExcludeSources: true,
-            },
         },
         sourcemap: true,
-        // Reduce bloat from legacy polyfills.
         target: 'esnext',
         // Leave minification up to applications.
         minify: false,
     },
-    plugins: [dts()],
 })

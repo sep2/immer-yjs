@@ -2,6 +2,7 @@
 dist/
 node_modules/
 coverage/
+*.tsbuildinfo
 
 # Logs
 logs
@@ -17,6 +18,7 @@ lerna-debug.log*
 # Tests
 /coverage
 /.nyc_output
+.vitest/
 
 # IDEs and editors
 /.idea
