@@ -2,10 +2,27 @@ name: Publish
 
 on:
     workflow_call:
+        inputs:
+            tag:
+                description: 'npm dist-tag to publish under'
+                required: false
+                default: latest
+                type: string
         secrets:
             NPM_TOKEN:
                 required: true
     workflow_dispatch:
+        inputs:
+            tag:
+                description: 'npm dist-tag to publish under. Use beta/rc for prereleases so `latest` keeps pointing at the current stable release.'
+                required: true
+                default: beta
+                type: choice
+                options:
+                    - beta
+                    - rc
+                    - next
+                    - latest
 
 permissions:
     contents: read
@@ -37,8 +54,10 @@ jobs:
               run: yarn turbo run build --filter=immer-yjs
             - name: Copy readme into package
               run: yarn workspace immer-yjs copy-readme
+            # A prerelease version (e.g. 2.0.0-beta.0) is rejected by npm unless an
+            # explicit dist-tag is given, so `tag` is always passed.
             - name: Stage publish to npm (awaits 2FA approval)
-              run: npm stage publish --access public
+              run: npm stage publish --access public --tag "${{ inputs.tag }}"
               working-directory: packages/immer-yjs
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
