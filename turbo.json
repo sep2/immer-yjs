@@ -13,8 +13,6 @@
             "outputs": []
         },
         "test": {
-            // `vitest` runs in watch mode outside of CI, so its result is not
-            // something we can meaningfully cache.
             "cache": false
         },
         "coverage": {
