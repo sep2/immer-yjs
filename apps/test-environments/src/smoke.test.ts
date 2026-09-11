@@ -1,17 +1,9 @@
-// Exercises the library for real against its *published* entry point, so that a
-// broken `exports` map or a wrong `"type"` field fails loudly instead of only
-// tripping up type checking.
-//
-// Deliberately free of Node-only globals (`node:assert`, `process`) so the same
-// file can run unchanged in every environment declared in vitest.config.ts.
-
 import { describe, expect, it, onTestFinished } from 'vitest'
 import * as Y from 'yjs'
 import { bind } from 'immer-yjs'
 
 type State = { count: number; items: { id: string }[] }
 
-// Builds a fresh doc and binder per call, so no state is shared between tests.
 const bindSeeded = () => {
     const doc = new Y.Doc()
     const binder = bind<State>(doc.getMap('state'))
