@@ -7,16 +7,10 @@
         "apps/*"
     ],
     "scripts": {
-        "dev": "turbo run dev",
-        "build": "turbo run build",
-        "test": "turbo run test",
-        "lint": "turbo run lint",
-        "check:types": "turbo run check:types",
-        "coverage": "turbo run coverage",
         "publish": "yarn workspace immer-yjs npm publish",
         "release": "yarn workspace immer-yjs release",
         "format": "prettier . --write",
-        "check:formatting": "prettier . --check"
+        "formatting:check": "prettier . --check"
     },
     "devDependencies": {
         "@types/node": "^17.0.21",
