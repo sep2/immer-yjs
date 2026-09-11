@@ -14,7 +14,8 @@
         "lint": "yarn workspace immer-yjs lint",
         "format": "prettier . --write",
         "check:formatting": "prettier . --check",
-        "check:types": "yarn workspace immer-yjs check:types"
+        "check:types": "yarn workspace immer-yjs check:types",
+        "test:imports": "yarn workspace test-app-imports test"
     },
     "devDependencies": {
         "@types/node": "^17.0.21",

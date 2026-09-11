@@ -1,0 +1,22 @@
+{
+    "name": "test-app-imports",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "test": "yarn test:types && yarn test:build && yarn test:run",
+        "test:types": "tsc -p tsconfig.bundler.json && tsc -p tsconfig.nodenext.json --noEmit && tsc -p tsconfig.cjs.json",
+        "test:build": "vite build && tsc -p tsconfig.nodenext.json",
+        "test:run": "node dist/node/smoke.js"
+    },
+    "dependencies": {
+        "immer": "^11.1.18",
+        "immer-yjs": "workspace:*",
+        "yjs": "^13.6.23"
+    },
+    "devDependencies": {
+        "@types/node": "^22.20.2",
+        "typescript": "^5.9.3",
+        "vite": "^8.2.2"
+    }
+}
