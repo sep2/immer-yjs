@@ -1,0 +1,34 @@
+name: Preview Release
+
+on:
+    pull_request:
+    push:
+        branches: [main]
+
+permissions:
+    contents: read
+
+# Publishes an installable preview of `immer-yjs` for every commit via
+# https://pkg.pr.new. The pkg-pr-new GitHub App comments the install URL on the
+# pull request. Nothing is published to the npm registry, and no token is
+# needed: the App verifies this workflow run instead.
+jobs:
+    preview:
+        name: Publish Preview Package
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out
+              uses: actions/checkout@v4
+            - name: Set up node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: 'yarn'
+            - name: Install
+              run: yarn install --immutable
+            - name: Build
+              run: yarn turbo run build --filter=immer-yjs
+            - name: Copy readme into package
+              run: yarn workspace immer-yjs copy-readme
+            - name: Publish preview
+              run: yarn dlx pkg-pr-new publish --packageManager=yarn './packages/immer-yjs'
