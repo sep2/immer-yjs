@@ -2,13 +2,12 @@ name: Publish
 
 on:
     workflow_call:
-        secrets:
-            NPM_TOKEN:
-                required: true
     workflow_dispatch:
 
 permissions:
     contents: read
+    # Required for npm trusted publishing (OIDC)
+    id-token: write
 
 jobs:
     ci:
@@ -37,8 +36,7 @@ jobs:
               run: yarn turbo run build --filter=immer-yjs
             - name: Copy readme into package
               run: yarn workspace immer-yjs copy-readme
+            # Authenticated via OIDC trusted publishing
             - name: Stage publish to npm (awaits 2FA approval)
               run: npm stage publish --access public
               working-directory: packages/immer-yjs
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
