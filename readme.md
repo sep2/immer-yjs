@@ -2,6 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/immer-yjs.svg)](https://www.npmjs.com/package/immer-yjs)
 [![size](https://img.shields.io/bundlephobia/minzip/immer-yjs)](https://bundlephobia.com/result?p=immer-yjs)
+[![ci](https://img.shields.io/github/actions/workflow/status/sep2/immer-yjs/release-please.yml?branch=main&label=ci)](https://github.com/sep2/immer-yjs/actions/workflows/release-please.yml)
 
 Combine immer & y.js
 
@@ -123,24 +124,28 @@ function Component() {
 binder.unbind()
 ```
 
+## Example App
+
+https://github.com/sep2/immer-yjs/tree/main/apps/immer-yjs-react
+
 ## Integration with other frameworks
 
 Please submit with sample code by PR, helps needed.
 
-# Demos
+## Demos
 
 Data will sync between multiple browser tabs automatically.
 
 - [Messages Object](https://codesandbox.io/s/immer-yjs-demo-6e0znb)
 
-# Changelog
+## Changelog
 
 [Changelog](https://github.com/sep2/immer-yjs/blob/main/packages/immer-yjs/CHANGELOG.md)
 
-# Similar projects
+## Similar projects
 
 [valtio-yjs](https://github.com/dai-shi/valtio-yjs)
 
-# Example App
+## Credits
 
-https://github.com/sep2/immer-yjs/tree/main/apps/immer-yjs-react
+Created by [@sep2](https://github.com/sep2)
