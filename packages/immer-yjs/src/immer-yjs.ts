@@ -146,7 +146,7 @@ function applyUpdate<S extends Snapshot>(
 export type ListenerFn<S extends Snapshot> = (snapshot: S) => void
 export type UnsubscribeFn = () => void
 
-export type Binder<S extends Snapshot> = {
+export type Binder<S extends Snapshot = Snapshot> = {
     /**
      * Release the binder.
      */
