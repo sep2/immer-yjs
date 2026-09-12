@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import * as Y from 'yjs'
 
-import { bind } from './immer-yjs'
+import { type Binder, bind } from './immer-yjs'
 import { createSampleObject, id1, id2, id3 } from './sample-data'
 
 test('bind usage demo', () => {
@@ -254,4 +254,17 @@ describe('array splice', () => {
         expect(result[2]).toBe(3)
         expect(result[3]).toBe(4)
     })
+})
+
+test('Binder can be annotated without a type argument', () => {
+    const doc = new Y.Doc()
+
+    // `Binder` defaults its type argument to `Snapshot`, matching how `bind`
+    // falls back to `Snapshot` when called without one. This annotation is the
+    // actual assertion: it fails to compile if the default is ever removed.
+    const binder: Binder = bind(doc.getMap('map'))
+
+    binder.update(() => ({ count: 1 }))
+
+    expect(binder.get()).toEqual({ count: 1 })
 })
