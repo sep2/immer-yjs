@@ -2,7 +2,11 @@ name: Release Please
 
 on:
     push:
-        branches: [main]
+        # `main` carries the current major. `*.x` are maintenance branches (e.g.
+        # `2.x`), created by hand only when a major needs patches after `main` has
+        # moved on. Each branch carries its own release-please config and manifest,
+        # so a maintenance branch omits the prerelease keys and ships stable patches.
+        branches: [main, '*.x']
 
 permissions:
     contents: write
@@ -16,13 +20,39 @@ jobs:
         needs: ci
         runs-on: ubuntu-latest
         outputs:
-            release_created: ${{ steps.release.outputs.release_created }}
+            release_created: ${{ steps.release.outputs['packages/immer-yjs--release_created'] }}
+            dist_tag: ${{ steps.dist-tag.outputs.tag }}
         steps:
             - uses: googleapis/release-please-action@v5
               id: release
               with:
                   config-file: release-please-config.json
                   manifest-file: .release-please-manifest.json
+                  target-branch: ${{ github.ref_name }}
+
+            # `immer-yjs` is not the root component, so release-please exposes its
+            # outputs under the `packages/immer-yjs--` prefix rather than bare names.
+            #
+            # Derive the npm dist-tag from the released version so it tracks the
+            # release-please config automatically: 2.0.0-beta.0 -> beta,
+            # 2.0.0-rc.1 -> rc, 2.0.0 -> latest. Dropping the prerelease keys from
+            # release-please-config.json is therefore all that graduating to a
+            # stable release requires.
+            - name: Derive npm dist-tag
+              id: dist-tag
+              if: ${{ steps.release.outputs['packages/immer-yjs--release_created'] == 'true' }}
+              env:
+                  VERSION: ${{ steps.release.outputs['packages/immer-yjs--version'] }}
+              run: |
+                  set -euo pipefail
+                  if [[ "$VERSION" == *-* ]]; then
+                      prerelease="${VERSION#*-}"
+                      tag="${prerelease%%.*}"
+                  else
+                      tag=latest
+                  fi
+                  echo "Publishing $VERSION under dist-tag '$tag'"
+                  echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
     publish:
         needs: release-please
@@ -32,3 +62,5 @@ jobs:
         secrets:
             NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         uses: ./.github/workflows/publish.yml
+        with:
+            tag: ${{ needs.release-please.outputs.dist_tag }}
