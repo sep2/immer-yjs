@@ -3,6 +3,9 @@
     "release-type": "node",
     "include-component-in-tag": false,
     "bootstrap-sha": "efa3b7e38f6b7b85817f71bc5876346de45b3122",
+    "versioning": "prerelease",
+    "prerelease": true,
+    "prerelease-type": "beta",
     "packages": {
         "packages/immer-yjs": {}
     }
