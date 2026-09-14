@@ -259,9 +259,6 @@ describe('array splice', () => {
 test('Binder can be annotated without a type argument', () => {
     const doc = new Y.Doc()
 
-    // `Binder` defaults its type argument to `Snapshot`, matching how `bind`
-    // falls back to `Snapshot` when called without one. This annotation is the
-    // actual assertion: it fails to compile if the default is ever removed.
     const binder: Binder = bind(doc.getMap('map'))
 
     binder.update(() => ({ count: 1 }))
