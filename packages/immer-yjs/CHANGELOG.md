@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/sep2/immer-yjs/compare/v1.2.0...v2.0.0) (2026-09-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* any -> unknown ([#32](https://github.com/sep2/immer-yjs/issues/32))
+* immer 11 ([#33](https://github.com/sep2/immer-yjs/issues/33))
+
+### Features
+
+* any -&gt; unknown ([#32](https://github.com/sep2/immer-yjs/issues/32)) ([e750d59](https://github.com/sep2/immer-yjs/commit/e750d59a289182a3ff48d631e167a9076e3f3f3e))
+* default Binder type argument to Snapshot ([#41](https://github.com/sep2/immer-yjs/issues/41)) ([81b3032](https://github.com/sep2/immer-yjs/commit/81b3032e31eb69ad25e29ae02a99b70021eaeb45))
+* immer 11 ([#33](https://github.com/sep2/immer-yjs/issues/33)) ([2deea38](https://github.com/sep2/immer-yjs/commit/2deea38e124cde4b62659c32a7839590843d28b0))
+
 ## 1.1.0 (2022-11-11)
 
 ### ⚠ BREAKING CHANGES
