@@ -9,16 +9,17 @@
     "scripts": {
         "publish": "yarn workspace immer-yjs npm publish",
         "release": "yarn workspace immer-yjs release",
-        "format": "prettier . --write",
-        "formatting:check": "prettier . --check"
+        "format": "oxfmt .",
+        "formatting:check": "oxfmt --check .",
+        "formatting:fix": "oxfmt --write ."
     },
     "devDependencies": {
         "@types/node": "^17.0.21",
-        "prettier": "^3.4.2",
+        "oxfmt": "^0.68.0",
         "turbo": "^2.10.12"
     },
-    "packageManager": "yarn@4.18.0",
     "resolutions": {
         "@rushstack/node-core-library@npm:5.24.1": "patch:@rushstack/node-core-library@npm%3A5.24.1#~/.yarn/patches/@rushstack-node-core-library-npm-5.24.1-3220212a85.patch"
-    }
+    },
+    "packageManager": "yarn@4.18.0"
 }

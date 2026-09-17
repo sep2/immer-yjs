@@ -1,7 +1,7 @@
 {
     "name": "test-environments",
-    "private": true,
     "version": "0.0.0",
+    "private": true,
     "type": "module",
     "scripts": {
         "build": "vite build",

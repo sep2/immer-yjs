@@ -1,13 +1,20 @@
 {
     "name": "immer-yjs",
-    "license": "MIT",
-    "description": "Combine immer & y.js",
     "version": "1.2.0",
-    "Author": "LCZ",
+    "description": "Combine immer & y.js",
+    "keywords": [
+        "crdt",
+        "immer",
+        "yjs"
+    ],
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/sep2/immer-yjs.git"
     },
+    "files": [
+        "dist"
+    ],
     "type": "module",
     "main": "./dist/immer-yjs.js",
     "types": "./dist/index.d.ts",
@@ -17,9 +24,6 @@
             "default": "./dist/immer-yjs.js"
         }
     },
-    "files": [
-        "dist"
-    ],
     "scripts": {
         "build": "vite build",
         "test": "NODE_NO_WARNINGS=1 vitest run",
@@ -28,10 +32,6 @@
         "release": "yarn copy-readme && standard-version",
         "types:check": "tsc -b",
         "lint": "eslint ."
-    },
-    "peerDependencies": {
-        "immer": "^11.1.18",
-        "yjs": "^13.5.35"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
@@ -48,9 +48,9 @@
         "vitest": "^5.0.0",
         "yjs": "^13.5.35"
     },
-    "keywords": [
-        "immer",
-        "yjs",
-        "crdt"
-    ]
+    "peerDependencies": {
+        "immer": "^11.1.18",
+        "yjs": "^13.5.35"
+    },
+    "Author": "LCZ"
 }
